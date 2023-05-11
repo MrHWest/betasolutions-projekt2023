@@ -1,4 +1,4 @@
 package com.betasolutions.projekt2023.repository;
 
-public class repository {
+public class Repository {
 }

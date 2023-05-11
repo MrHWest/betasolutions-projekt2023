@@ -1,4 +1,4 @@
 package com.betasolutions.projekt2023.controller;
 
-public class controller {
+public class Controller {
 }
