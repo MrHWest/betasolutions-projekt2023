@@ -27,6 +27,6 @@ CREATE TABLE beta_solutions_db.tasks (
                                          `fk_project_id` INT NOT NULL,
                                          FOREIGN KEY (`fk_project_id`) REFERENCES projects(id),
 
-                                         `fk_tasks_id` INT NOT NULL,
+                                         `fk_tasks_id` INT,
                                          FOREIGN KEY (`fk_tasks_id`) REFERENCES tasks(id)
 );
