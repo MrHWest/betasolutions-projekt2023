@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="hhtp://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <!-- Thymeleaf Spring css-->
+    <link th:href="@{/css/all.css}" rel="stylesheet"/>
+    <!-- Local html css -->
+    <link href="../static/all.css" rel="stylesheet">
+</head>
+<body>
+<div class="center">
+    <h1>Login</h1>
+    <form method="post">
+        <div class="textfield">
+            <input type="text" required>
+            <span></span>
+            <label>Username</label>
+        </div>
+        <div class="textfield">
+            <input type="password" required>
+            <span></span>
+            <label>Password</label>
+        </div>
+        <input type="submit" value="Login">
+    </form>
+</div>
+</body>
+</html>

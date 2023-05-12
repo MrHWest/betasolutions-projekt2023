@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="hhtp://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Projektoversigt</title>
+  <!-- Thymeleaf Spring css-->
+  <link th:href="@{/css/all.css}" rel="stylesheet"/>
+  <!-- Local html css -->
+  <link href="../static/all.css" rel="stylesheet">
+
+  <div class="loghead">
+    <form>
+      <div>
+         <a class="logoutbutton" href="Login.html" target="_blank">Logout</a>
+          Alpha Solutions
+      </div>
+    </form>
+  </div>
+</head>
+<body>
+<div class="nyprojekt">
+    <form>
+        <div>
+            <button class="opretnytprojektbutton">Opret nyt projekt</button>
+        </div>
+    </form>
+</div>
+<!--<div class="dropdown">
+    <button class="dropbutton">Projekt 1</button>
+        <div class="dropdown-content">
+            <a href="#"> Opgave 1</a>
+            <a href="#">Opgave 2</a>
+            <a href="#">Opgave 3</a>
+        </div>
+</div>
+-->
+<div class="row">
+    <div class="column">
+        <table>
+            <tr>
+                <th>Opgaver</th>
+                <th>Underopgaver</th>
+            </tr>
+            <tr>
+                <td>Opg1</td>
+                <td>Uopg1</td>
+            </tr>
+            <tr>
+                <td>Opg2</td>
+                <td>Uopg2</td>
+            </tr>
+            <tr>
+                <td>Opg3</td>
+                <td>Uopg3</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <table>
+            <tr>
+                <th>Opgaver</th>
+                <th>Underopgaver</th>
+            </tr>
+            <tr>
+                <td>Opg1</td>
+                <td>Uopg1</td>
+            </tr>
+            <tr>
+                <td>Opg2</td>
+                <td>Uopg2</td>
+            </tr>
+            <tr>
+                <td>Opg3</td>
+                <td>Uopg3</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
