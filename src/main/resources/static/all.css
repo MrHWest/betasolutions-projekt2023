@@ -174,10 +174,11 @@ tr:nth-child(even) {
 h2{
     text-align: center;
     color: white;
-    transform: translate(0%, 1200%);
+    /*transform: translate(0%, 1200%);*/
 }
 .projektoplysniger{
-    transform: translate(30%, 790%);
+    /*transform: translate(30%, 790%);*/
+    text-align:center;
 
 }
 label{
