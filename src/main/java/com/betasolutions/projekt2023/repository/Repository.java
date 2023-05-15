@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Value;
+
 
 @org.springframework.stereotype.Repository
 public class Repository {
