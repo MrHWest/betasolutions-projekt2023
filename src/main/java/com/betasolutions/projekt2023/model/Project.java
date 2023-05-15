@@ -1,16 +1,26 @@
 package com.betasolutions.projekt2023.model;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+
 public class Project {
     private int id;
     private String name;
-    private int startDate;
-    private int slutDate;
+    private LocalDate startDate;
+    private LocalDate slutDate;
 
     public Project() {
     }
 
-    public Project(int id, String name, int startDate, int slutDate) {
+    public Project(int id, String name, LocalDate startDate, LocalDate slutDate) {
         this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.slutDate = slutDate;
+    }
+
+    public Project(String name, LocalDate startDate, LocalDate slutDate) {
         this.name = name;
         this.startDate = startDate;
         this.slutDate = slutDate;
@@ -32,19 +42,19 @@ public class Project {
         this.name = name;
     }
 
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public int getSlutDate() {
+    public LocalDate getSlutDate() {
         return slutDate;
     }
 
-    public void setSlutDate(int slutDate) {
+    public void setSlutDate(LocalDate slutDate) {
         this.slutDate = slutDate;
     }
 }

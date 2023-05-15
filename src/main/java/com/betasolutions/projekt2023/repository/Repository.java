@@ -1,9 +1,11 @@
 package com.betasolutions.projekt2023.repository;
 
 import com.betasolutions.projekt2023.model.User;
+import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -87,6 +89,25 @@ public class Repository {
             e.printStackTrace();
         }
 
+    }
+
+    public void addProject(Project newProject) {
+        // Gør QUERY klar
+        String ADDPROJECT_QUERY = "INSERT INTO beta_solutions_db.projects(name, start_date, end_date) VALUES (?, ?, ?)";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //Execute QUERY
+            PreparedStatement statement = connection.prepareStatement(ADDPROJECT_QUERY);
+            statement.setString(1, newProject.getName());
+            statement.setDate(2, Date.valueOf(newProject.getStartDate()));
+            statement.setDate(3, Date.valueOf(newProject.getSlutDate()));
+            statement.execute();
+
+        } catch (SQLException e){
+            System.out.println("Fejl i oprettelse");
+            e.printStackTrace();
+        }
     }
 
 
