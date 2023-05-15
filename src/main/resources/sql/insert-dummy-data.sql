@@ -19,7 +19,7 @@ INSERT INTO beta_solutions_db.projects (name, start_date, end_date)
 VALUES ('Projekt 2', STR_TO_DATE('2002-02-02', '%Y-%m-%d'), STR_TO_DATE('2023-05-10', '%Y-%m-%d'));
 
 -- Insert tasks
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task1',
            STR_TO_DATE('2023-04-11', '%Y-%m-%d'),
@@ -29,7 +29,7 @@ VALUES (
            NULL
        );
 
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task2',
            STR_TO_DATE('2023-04-21', '%Y-%m-%d'),
@@ -39,7 +39,7 @@ VALUES (
            NULL
        );
 
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task2-subtask1',
            STR_TO_DATE('2023-04-21', '%Y-%m-%d'),
@@ -49,7 +49,7 @@ VALUES (
            2
        );
 
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task2-subtask2',
            STR_TO_DATE('2023-04-23', '%Y-%m-%d'),
@@ -59,16 +59,17 @@ VALUES (
            2
        );
 
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task2-subtask3',
            STR_TO_DATE('2023-04-22', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-24', '%Y-%m-%d'),
+           true,
            1,
            2
        );
 
-INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, fk_project_id, fk_tasks_id)
+INSERT INTO beta_solutions_db.tasks (name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id)
 VALUES (
            'Proj1-task3',
            STR_TO_DATE('2023-04-15', '%Y-%m-%d'),
