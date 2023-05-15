@@ -7,16 +7,18 @@ public class Task {
     private String name;
     private int startDato;
     private int slutDato;
+    private boolean isPending;
 
 
     public Task() {
     }
 
-    public Task(int id, String name, int startDato, int slutDato) {
+    public Task(int id, String name, int startDato, int slutDato, boolean isPending) {
         this.id = id;
         this.name = name;
         this.startDato = startDato;
         this.slutDato = slutDato;
+        this.isPending = isPending;
     }
 
     public int getId() {
@@ -49,5 +51,12 @@ public class Task {
 
     public void setSlutDato(int slutDato) {
         this.slutDato = slutDato;
+    }
+
+    public boolean getIsPending() {
+        return isPending;
+    }
+    public boolean setIsPending(boolean isPending) {
+        return this.isPending = isPending;
     }
 }
