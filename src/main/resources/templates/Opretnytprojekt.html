@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="hhtp://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret nyt projekt</title>
+  <!-- Thymeleaf Spring css-->
+  <link th:href="@{/css/all.css}" rel="stylesheet"/>
+  <!-- Local html css -->
+  <link href="../static/all.css" rel="stylesheet">
+
+  <h2>Projektoplysninger</h2>
+</head>
+<body>
+<div class="projektoplysniger">
+<form>
+  <label for="name">Projektnavn</label>
+  <input type="text" id="name">
+  <label for="startdate">Start dato</label>
+  <input type="date" id="startdate">
+  <label for="enddate">Slut dato</label>
+  <input type="date" id="enddate">
+    <input type="submit" value="Opret Projekt" id="submit2">
+  </form>
+</div>
+</body>
+</html>
