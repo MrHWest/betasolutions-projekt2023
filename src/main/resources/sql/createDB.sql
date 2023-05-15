@@ -24,9 +24,11 @@ CREATE TABLE beta_solutions_db.tasks (
                                          `start_date` DATE,
                                          `end_date` DATE,
 
+                                         `is_pending` BOOLEAN NOT NULL,
+
                                          `fk_project_id` INT NOT NULL,
                                          FOREIGN KEY (`fk_project_id`) REFERENCES projects(id),
 
-                                         `fk_tasks_id` INT,
+                                         `fk_tasks_id` INT(10),
                                          FOREIGN KEY (`fk_tasks_id`) REFERENCES tasks(id)
 );

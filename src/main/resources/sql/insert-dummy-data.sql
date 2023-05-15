@@ -24,6 +24,7 @@ VALUES (
            'Proj1-task1',
            STR_TO_DATE('2023-04-11', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-21', '%Y-%m-%d'),
+           true,
            1,
            NULL
        );
@@ -33,6 +34,7 @@ VALUES (
            'Proj1-task2',
            STR_TO_DATE('2023-04-21', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-25', '%Y-%m-%d'),
+           false,
            1,
            NULL
        );
@@ -42,6 +44,7 @@ VALUES (
            'Proj1-task2-subtask1',
            STR_TO_DATE('2023-04-21', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-22', '%Y-%m-%d'),
+           false,
            1,
            2
        );
@@ -51,6 +54,7 @@ VALUES (
            'Proj1-task2-subtask2',
            STR_TO_DATE('2023-04-23', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-25', '%Y-%m-%d'),
+           false,
            1,
            2
        );
@@ -69,6 +73,7 @@ VALUES (
            'Proj1-task3',
            STR_TO_DATE('2023-04-15', '%Y-%m-%d'),
            STR_TO_DATE('2023-04-17', '%Y-%m-%d'),
+           false,
            1,
            NULL
        );
