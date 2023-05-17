@@ -5,20 +5,23 @@ import java.util.ArrayList;
 public class Task {
     private int id;
     private String name;
-    private int startDato;
-    private int slutDato;
+    private int startDate;
+    private int endDate;
     private boolean isPending;
 
 
     public Task() {
     }
 
-    public Task(int id, String name, int startDato, int slutDato, boolean isPending) {
+    public Task(int id, String name, int startDate, int endDate, boolean isPending) {
         this.id = id;
         this.name = name;
-        this.startDato = startDato;
-        this.slutDato = slutDato;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.isPending = isPending;
+    }
+
+    public Task(int id, String name, int startDate, int endDate) {
     }
 
     public int getId() {
@@ -37,20 +40,20 @@ public class Task {
         this.name = name;
     }
 
-    public int getStartDato() {
-        return startDato;
+    public int getStartDate() {
+        return startDate;
     }
 
-    public void setStartDato(int startDato) {
-        this.startDato = startDato;
+    public void setStartDate(int startDate) {
+        this.startDate = startDate;
     }
 
-    public int getSlutDato() {
-        return slutDato;
+    public int getEndDate() {
+        return endDate;
     }
 
-    public void setSlutDato(int slutDato) {
-        this.slutDato = slutDato;
+    public void setEndDato(int endDato) {
+        this.endDate = endDato;
     }
 
     public boolean getIsPending() {
@@ -58,5 +61,9 @@ public class Task {
     }
     public boolean setIsPending(boolean isPending) {
         return this.isPending = isPending;
+    }
+    @Override
+    public String toString(){
+        return "task{" + "id=" + id + ", name='" + name + '\'' + ", startDate=" + startDate + '}';
     }
 }

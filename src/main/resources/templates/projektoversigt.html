@@ -11,7 +11,7 @@
   <div class="loghead">
     <form>
       <div>
-         <a class="logoutbutton" href="Login.html" target="_blank">Logout</a>
+         <a class="logoutbutton" href="login.html" target="_blank">Logout</a>
           Alpha Solutions
       </div>
     </form>
@@ -22,20 +22,51 @@
     <form>
         <div>
             <!--<button class="opretnytprojektbutton">Opret nyt projekt</button>-->
-            <a class="forma" href="Opretnytprojekt.html">Opret nyt projekt</a>
+            <a class="forma" href="create.html">Opret nyt projekt</a>
         </div>
     </form>
 </div>
-<!--<div class="dropdown">
-    <button class="dropbutton">Projekt 1</button>
-        <div class="dropdown-content">
-            <a href="#"> Opgave 1</a>
-            <a href="#">Opgave 2</a>
-            <a href="#">Opgave 3</a>
-        </div>
+<div class="container">
+    <table>
+        <thead>
+        <th>Id</th>
+        <th>Navn</th>
+        <th>Startdato</th>
+        <th>Slutdato</th>
+        <th>Update</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.id}">
+                1
+            </td>
+            <td th:text="${project.name}">
+                Byggeprojekt
+            </td>
+            <td th:text="${project.startDate}">
+                24 september
+            </td>
+            <td th:text="${project.endDate}">
+                30 september
+            </td>
+            <td>
+                <a th:href="@{'/update/' + ${product.name}}" href="/update">Opdater</a>
+            </td>
+            <td>
+                <a th:href="@{'/edit/' + ${product.name}}" href="/edit">Rediger</a>
+            </td>
+            <td>
+                <a th:href="@{'/delete/' + ${product.name}}" href="/delete">Slet</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
 </div>
--->
-<div class="row">
+
+<!--<div class="row">
     <div class="column">
         <table>
             <tr>
@@ -45,14 +76,29 @@
             <tr>
                 <td>Opg1</td>
                 <td>Uopg1</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
             <tr>
                 <td>Opg2</td>
                 <td>Uopg2</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
             <tr>
                 <td>Opg3</td>
                 <td>Uopg3</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
         </table>
     </div>
@@ -65,17 +111,32 @@
             <tr>
                 <td>Opg1</td>
                 <td>Uopg1</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
             <tr>
                 <td>Opg2</td>
                 <td>Uopg2</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
             <tr>
                 <td>Opg3</td>
                 <td>Uopg3</td>
+                <th>
+                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
+                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
+                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
+                </th>
             </tr>
         </table>
     </div>
-</div>
+</div>-->
 </body>
 </html>

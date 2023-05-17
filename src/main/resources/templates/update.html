@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opdater projekt</title>
+</head>
+<body>
+<div class="container">
+  <h1>Opdater eksisterende produkt</h1>
+  <form action="/update" method="post">
+    <input id="id-field" name="project-id" type="hidden" th:value="${product.id}">
+
+    <label for="task-name">Produkt navn:</label>
+    <input id="task-name" name="project-name" type="text" th:value="${product.name}">
+
+    <label for="task-startdate">Produkt pris:</label>
+    <input id="task-startdate" name="project-startDate" type="number" th:value="${product.startDate}">
+
+    <label for="task-enddate">Produkt pris:</label>
+    <input id="task-enddate" name="project-endDate" type="number" th:value="${product.endDate}">
+
+    <input type="submit" value="Opdater produkt">
+  </form>
+</div>
+</body>
+</html>
