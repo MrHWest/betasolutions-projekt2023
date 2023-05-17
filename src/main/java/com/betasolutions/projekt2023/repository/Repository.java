@@ -3,6 +3,8 @@ package com.betasolutions.projekt2023.repository;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
+import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -109,8 +111,5 @@ public class Repository {
             e.printStackTrace();
         }
     }
-
-
-
 
 }

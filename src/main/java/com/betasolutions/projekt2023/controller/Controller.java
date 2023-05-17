@@ -29,7 +29,7 @@ public class Controller {
         return "Forside";
     }
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public String showIndex(HttpSession session, Model model){
 
         if (session.getAttribute("username") == "admin" &&
@@ -41,7 +41,7 @@ public class Controller {
             return "udviklerindex";
         }
         return "index";
-    }
+    }*/
     @GetMapping("/nyt_projekt")
     public String newProject() {
         // TODO: Replace this with session data when log-in system has been implemented
@@ -74,4 +74,37 @@ public class Controller {
             return "redirect:/nyt_projekt?success=true";
         }
     }
+
+    @GetMapping("/ny_bruger")
+    public String newUser(){
+        // TODO: Replace this with session data when log-in system has been implemented
+        User loggedIn = new User(0, "test", "test", true);
+
+        // Redirect to login-page when not admin
+        if(!loggedIn.getAdmin()) {
+            return "redirect:/login";
+        }
+        else {
+            return "Opretnybruger";
+        }
+    }
+
+    @PostMapping("/create-user")
+    public String createNewUser(
+        @RequestParam("name") String name,
+        @RequestParam("password") String password,
+        @RequestParam("isAdmin") boolean isAdmin ){
+
+        if(name.length() > 99 || name.length() == 0 || password.length() > 45 || password.length() == 0){
+            //Name and Password is invalid
+            return "redirect:/ny_bruger?invalidNameAndPassword=true";
+        } else {
+            repository.addUser(name, password, isAdmin);
+            return "redirect:/ny_bruger?succes=true";
+        }
+    }
+
+
+
+
 }
