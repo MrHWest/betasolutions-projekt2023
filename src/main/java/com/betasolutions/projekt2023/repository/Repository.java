@@ -109,8 +109,60 @@ public class Repository {
             e.printStackTrace();
         }
     }
+    public void addTask(String name, int startDate, int endDate){
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, startDate, endDate) VALUES(?,?,?)";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //Execute QUERY
+            PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
+            statement.setString(1, name);
+            statement.setInt(2, startDate);
+            statement.setInt(3, endDate);
+            statement.execute();
 
+        } catch(SQLException e){
+            System.out.println("Fejl i oprettelse");
+            e.printStackTrace();
+        }
+    }
+    public void updateTask(Task task){
+        //Gør QUERY klar
+        String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, startDate = ?, endDate = ? WHERE id= ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(UPDATETASK_QUERY);
 
+            String name = task.getName();
+            int startDate = task.getStartDate();
+            int endDate = task.getEndDate();
+            //int id = task.getId();
 
+            statement.setString(1, name);
+            statement.setInt(2, startDate);
+            statement.setInt(3, endDate);
+            //statement.setInt(4, id);
+
+            statement.executeUpdate();
+        } catch(SQLException e){
+            System.out.println("Opdatering fejlede");
+            e.printStackTrace();
+        }
+    }
+    public void deleteTaskById(int id){
+        String DELETETASK_QUERY = "DELETE FROM beta_solutions_db.tasks WHERE id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(DELETETASK_QUERY);
+
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e){
+            System.out.println("Kunne ikke slette task/opgave");
+            e.printStackTrace();
+        }
+    }
 
 }
