@@ -161,6 +161,7 @@ public class Repository {
             statement.executeUpdate();
         } catch (SQLException e){
             System.out.println("Kunne ikke slette task/opgave");
+            System.out.println("whatever");
             e.printStackTrace();
         }
     }
