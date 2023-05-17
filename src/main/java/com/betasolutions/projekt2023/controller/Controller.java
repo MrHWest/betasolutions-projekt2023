@@ -3,7 +3,9 @@ package com.betasolutions.projekt2023.controller;
 import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.repository.Repository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,19 @@ public class Controller {
         return "Forside";
     }
 
+    @GetMapping("/")
+    public String showIndex(HttpSession session, Model model){
+
+        if (session.getAttribute("username") == "admin" &&
+                session.getAttribute("passWord") == "admin"){
+            return "adminindex";
+        }
+        if (session.getAttribute("username") == "udvikler" &&
+                session.getAttribute("passWord") == "udvikler"){
+            return "udviklerindex";
+        }
+        return "index";
+    }
     @GetMapping("/nyt_projekt")
     public String newProject() {
         // TODO: Replace this with session data when log-in system has been implemented
