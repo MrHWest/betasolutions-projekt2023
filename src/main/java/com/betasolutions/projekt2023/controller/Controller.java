@@ -29,18 +29,35 @@ public class Controller {
         return "Forside";
     }
 
-    @GetMapping("/")
-    public String showIndex(HttpSession session, Model model){
+    @GetMapping("/test")
+    public String showProjektoversigt(HttpSession session, Model model){
 
         if (session.getAttribute("username") == "admin" &&
                 session.getAttribute("passWord") == "admin"){
-            return "adminindex";
+            return "projektoversigt";
         }
         if (session.getAttribute("username") == "udvikler" &&
                 session.getAttribute("passWord") == "udvikler"){
-            return "udviklerindex";
+            return "projektoversigt";
         }
-        return "index";
+        return "Login";
+    }
+
+    @GetMapping("/login")
+    public String login(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password){
+
+        User user = repository.getUser(username);
+
+        if (user != null){
+            session.setAttribute("id", user.getId());
+            session.setAttribute("username", user.getName());
+            session.setAttribute("password", user.getPassword());
+            session.setAttribute("isAdmin", user.getAdmin());
+            return "projektoversigt";
+        }
+
+        return "Login";
+
     }
     @GetMapping("/nyt_projekt")
     public String newProject() {
