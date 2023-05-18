@@ -16,6 +16,7 @@ import javax.naming.ldap.Control;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -92,6 +93,14 @@ public class Controller {
             repository.addProject(newProject);
             return "redirect:/nyt_projekt?success=true";
         }
+    }
+
+
+    @GetMapping("/viewUsers")
+    public String getAllUsers(Model model){
+        List<User> users = repository.getAllUsers();
+        model.addAttribute("users", users);
+        return "viewUsers";
     }
 
     @GetMapping("/ny_bruger")

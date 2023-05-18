@@ -5,6 +5,8 @@ import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
 import com.betasolutions.projekt2023.model.Task;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -88,6 +90,35 @@ public class Repository {
 
     }
 
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+
+        String GETALLUSERS_QUERY = "SELECT * FROM USER";
+        ConnectionManager connectionManager = new ConnectionManager();
+
+        try {
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(GETALLUSERS_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setPassword(resultSet.getString("password"));
+                user.setAdmin(resultSet.getBoolean("isAdmin"));
+
+                users.add(user);
+            }
+
+        } catch (SQLException e){
+            System.out.println("Kunne ikke hente listen af alle /User ");
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    //Start på John's kode
     public User getUser(String name){
         User user = new User();
 
@@ -111,6 +142,7 @@ public class Repository {
         }
         return user;
     }
+    //Slut på John's kode
 
     public void addProject(Project newProject) {
         // Gør QUERY klar

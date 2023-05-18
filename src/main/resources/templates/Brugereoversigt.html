@@ -36,7 +36,10 @@
         <th>Admin</th>
       </tr>
 
-      <tr th:each="${user.name}">
+      <tr th:each="user : ${users}">
+        <th th:text="${user.name}"></th>
+        <th th:text="${user.password}"></th>
+        <th th:text="${user.isAdmin}"></th>
 
       </tr>
 
