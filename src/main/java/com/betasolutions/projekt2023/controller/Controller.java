@@ -4,6 +4,7 @@ import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.model.Task;
 import com.betasolutions.projekt2023.repository.Repository;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
@@ -48,10 +49,10 @@ public class Controller {
         return "Login";
     }
 
-    @GetMapping("/brugeroversigt")
+    /*@GetMapping("/brugeroversigt")
     public String getbrugerOversigt(){
         return "brugeroversigt";
-    }
+    }*/
 
     @PostMapping("/login")
     public String loginCheck(@RequestBody String requestBody){
@@ -142,7 +143,7 @@ public class Controller {
         }
     }
 
-<<<<<<< HEAD
+
     @GetMapping("/opdater_projekt")
     public String updateProject(@RequestParam(name="id", required = true) int id, Model model) {
         // TODO: Replace this with session data when log-in system has been implemented
@@ -166,29 +167,27 @@ public class Controller {
             @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
 
-        if(name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
+        if (name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
             // Name input is invalid.
-            return "redirect:/opdater_projekt?id=" + id +"&invalidName=true";
+            return "redirect:/opdater_projekt?id=" + id + "&invalidName=true";
             //return "redirect:/opdater_projekt?id=" + id;
-        }
-        else {
+        } else {
             // All input is OK.
             Project newProject = new Project(id, name, startDate, endDate);
             repository.updateProject(newProject);
             return "redirect:/opdater_projekt?id=" + id + "&success=true";
             //return "redirect:/opdater_projekt?id=" + id;
         }
-=======
-
-    @GetMapping("/viewUsers")
+    }
+    @GetMapping("/brugeroversigt")
     public String getAllUsers(Model model){
         List<User> users = repository.getAllUsers();
         model.addAttribute("users", users);
-        return "viewUsers";
->>>>>>> b36dbd0346e1fb77be169c7137a86bc81140d693
+        return "brugeroversigt";
+
     }
 
-    @GetMapping("/ny_bruger")
+    /*@GetMapping("/ny_bruger")
     public String newUser(){
         // TODO: Replace this with session data when log-in system has been implemented
         User loggedIn = new User(0, "test", "test", true);
@@ -200,22 +199,78 @@ public class Controller {
         else {
             return "Opretnybruger";
         }
+    }*/
+
+    @GetMapping("/opretnybruger")
+    public String newUser(){
+        return "Opretnybruger";
     }
 
-    @PostMapping("/create-user")
-    public String createNewUser(
-            @RequestParam("name") String name,
-            @RequestParam("password") String password,
-            @RequestParam("isAdmin") boolean isAdmin ){
+    @PostMapping("/opretnybruger")
+    public String newUser(@RequestBody String requestBody){
 
-        if(name.length() > 99 || name.length() == 0 || password.length() > 45 || password.length() == 0){
-            //Name and Password is invalid
-            return "redirect:/ny_bruger?invalidNameAndPassword=true";
-        } else {
-            repository.addUser(name, password, isAdmin);
-            return "redirect:/ny_bruger?succes=true";
+        System.out.println("RequestBody: " + requestBody);
+        //Gem data local
+        String username = "";
+        String password = "";
+        boolean isAdmin = false;
+
+        String[] input = requestBody.split("&");
+        for (String userInput : input){
+            if (userInput.startsWith("username=")){
+                System.out.println("username " + userInput);
+                username = userInput;
+                username = username.replace("username=", "");
+            } if (userInput.startsWith("password=")){
+                System.out.println("password " + userInput);
+                password = userInput;
+                password = password.replace("password=", "");
+            } if (userInput.equals("isAdmin=on")){
+                isAdmin = true;
+                System.out.println("isAdmin " + isAdmin);
+            }
+
         }
+
+        //Tjek om username allerede existere
+
+        User user = repository.getUser(username);
+        repository.getUser(username);
+
+        //Hvis ja, bed om ny username
+        if(username.length() > 0 && password.length() > 0) {
+            if (!username.equals(user.getName())) {
+                user.setName(username);
+                user.setPassword(password);
+                user.setAdmin(isAdmin);
+
+                repository.addUser(username, password, isAdmin);
+                return "redirect:/brugeroversigt";
+
+            } else { //Hvis nej, opret ny bruger
+
+                return "opretnybruger";
+            }
+        } return "opretnybruger";
     }
+
+    @PostMapping("/deleteuser")
+    public String deleteUser(@RequestParam("userId") int userId) {
+        repository.deleteUserById(userId);
+
+        return "redirect:/brugeroversigt";
+    }
+
+    /*@PostMapping("/deleteuser")
+    public String deleteUser(@RequestBody String requestBody){
+
+        //Få data
+
+        //Execute delete_query fra repository
+        repository.deleteUserById(getId);
+        return "brugeroversigt";
+
+    }*/
 
     //Ahmad's HomeController
 

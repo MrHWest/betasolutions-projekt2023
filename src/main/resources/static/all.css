@@ -201,3 +201,22 @@ label{
 .container{
     transform: translate(0%, 190%);
 }
+
+.updatebutton {
+
+    background-color: orange;
+    padding: 5px 10px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
+
+.deletebutton {
+    background-color: red;
+    color: red;
+    padding: 5px 10px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

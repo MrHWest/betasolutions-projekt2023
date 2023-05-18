@@ -59,12 +59,12 @@ public class Repository {
             String name = user.getName();
             String password = user.getPassword();
             boolean isAdmin = user.getAdmin();
-            //int id = user.getId();
+            int id = user.getId();
 
             statement.setString(1, name);
             statement.setString(2, password);
             statement.setBoolean(3, isAdmin);
-            //statement.setInt(4, id);
+            statement.setInt(4, id);
 
             statement.executeUpdate();
 
@@ -76,7 +76,7 @@ public class Repository {
     }
 
     public void deleteUserById(int id){
-        String DELETEUSER_QUERY = "DELETE FROM beta_solutions_db.user WHERE id = ?";
+        String DELETEUSER_QUERY = "DELETE FROM beta_solutions_db.users WHERE id = ?";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
@@ -108,7 +108,7 @@ public class Repository {
                 user.setId(resultSet.getInt("id"));
                 user.setName(resultSet.getString("name"));
                 user.setPassword(resultSet.getString("password"));
-                user.setAdmin(resultSet.getBoolean("isAdmin"));
+                user.setAdmin(resultSet.getBoolean("is_admin"));
 
                 users.add(user);
             }

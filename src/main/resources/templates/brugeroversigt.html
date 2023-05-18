@@ -13,7 +13,7 @@
         <a class="logoutbutton" href="/Login" target="_blank">Logout</a>
         <a class="logoutbutton" href="/brugeroversigt" target="_blank">Brugeroversigt</a>
         <a class="logoutbutton" href="/projektoversigt" target="_blank">Projektoversigt</a>
-        <p style="text-align: center">Alpha Solutions</p>
+        <p>Alpha Solutions</p>
       </div>
     </form>
   </div>
@@ -22,7 +22,7 @@
 <body>
 
 <div class="nyprojekt">
-  <a class="forma">
+  <a class="forma" href="/opretnybruger">
   Opret ny bruger
 </a></div>
 
@@ -37,11 +37,25 @@
       </tr>
 
       <tr th:each="user : ${users}">
-        <th th:text="${user.name}"></th>
-        <th th:text="${user.password}"></th>
-        <th th:text="${user.isAdmin}"></th>
+        <th th:text="${user.getName()}"></th>
+        <th th:text="${user.getPassword()}"></th>
+        <th th:unless="${user.getAdmin() == true}">❌</th>
+        <th th:if="${user.getAdmin() == true}">✅</th>
+        <th>
 
+
+             <a class="updatebutton" style="margin-right: 5px">Opdater</a>
+
+          <form th:action="@{/deleteuser}" method="post">
+            <input type="hidden" th:name="userId" th:value="${user.getId()}" />
+            <button type="submit" class="deletebutton">Delete</button>
+          </form>
+
+
+
+        </th>
       </tr>
+
 
     </table>
   </div>
