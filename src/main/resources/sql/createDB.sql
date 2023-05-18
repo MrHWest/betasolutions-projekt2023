@@ -4,7 +4,7 @@ CREATE SCHEMA beta_solutions_db;
 DROP TABLE IF EXISTS beta_solutions_db.users;
 CREATE TABLE beta_solutions_db.users (
                                          `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                         `name` VARCHAR(99) NOT NULL,
+                                         `name` VARCHAR(99) NOT NULL unique,
                                          `password` VARCHAR(45) NOT NULL,
                                          `is_admin` BOOLEAN NOT NULL
 );

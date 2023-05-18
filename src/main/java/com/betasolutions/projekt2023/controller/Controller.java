@@ -7,10 +7,7 @@ import com.betasolutions.projekt2023.repository.Repository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.naming.ldap.Control;
 import java.time.LocalDate;
@@ -47,6 +44,56 @@ public class Controller {
     }
 
     @GetMapping("/login")
+    public String login(HttpSession session){
+        return "Login";
+    }
+
+    @GetMapping("/brugeroversigt")
+    public String getbrugerOversigt(){
+        return "brugeroversigt";
+    }
+
+    @PostMapping("/login")
+    public String loginCheck(@RequestBody String requestBody){
+
+        //Gem data local
+        String username = "";
+        String password = "";
+
+        String[] input = requestBody.split("&");
+        for (String is : input){
+            if (is.startsWith("username=")){
+                System.out.println(is);
+                username = is;
+                username = username.replace("username=", "");
+            } if (is.startsWith("password=")){
+                System.out.println(is);
+                password = is;
+                password = password.replace("password=", "");
+
+            }
+        }
+
+        //check om data passer med DB
+
+        User user = repository.getUser(username);
+        repository.getUser(username);
+
+        //Hvis data ikke passer, send tilbage til login
+        if (!password.equals(user.getPassword())){
+            return "login";
+        } else { //Hvis data passer, send videre til korrekte side.
+            if (user.getAdmin()==true){return "projektoversigt";
+            } else{
+                return "udviklerprojektoversigt";
+            }
+
+        }
+
+    }
+
+
+    /*@GetMapping("/login")
     public String login(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password){
 
         User user = repository.getUser(username);
@@ -61,7 +108,7 @@ public class Controller {
 
         return "Login";
 
-    }
+    }*/
     @GetMapping("/nyt_projekt")
     public String newProject() {
         // TODO: Replace this with session data when log-in system has been implemented

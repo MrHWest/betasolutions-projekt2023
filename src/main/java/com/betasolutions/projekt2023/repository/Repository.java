@@ -93,7 +93,7 @@ public class Repository {
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
 
-        String GETALLUSERS_QUERY = "SELECT * FROM USER";
+        String GETALLUSERS_QUERY = "SELECT * FROM beta_solutions_db.users";
         ConnectionManager connectionManager = new ConnectionManager();
 
         try {
@@ -122,7 +122,7 @@ public class Repository {
     public User getUser(String name){
         User user = new User();
 
-        String GETUSER_QUERY = "SELECT * FROM USER where name = ?";
+        String GETUSER_QUERY = "SELECT * FROM beta_solutions_db.users where name = ?";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
@@ -130,14 +130,17 @@ public class Repository {
             PreparedStatement statement = connection.prepareStatement(GETUSER_QUERY);
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
-            String username = name;
-            int id = resultSet.getInt("id");
-            String password = resultSet.getString("password");
-            boolean isAdmin = resultSet.getBoolean("is_admin");
-            user = new User(id, username, password, isAdmin);
+            if(resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String password = resultSet.getString("password");
+                boolean isAdmin = resultSet.getBoolean("is_admin");
+                user = new User(id, name, password, isAdmin);
+            } else {
+                System.out.println("User with username " + name + " does not exist");
+            }
 
         } catch (SQLException e){
-            System.out.println("Fejl i oprettelse");
+            System.out.println("[Repository::getUser] Fejl i getUser funktion " + e.getMessage());
             e.printStackTrace();
         }
         return user;
