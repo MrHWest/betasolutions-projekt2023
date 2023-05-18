@@ -35,24 +35,14 @@
         <th>Bruger Password</th>
         <th>Admin</th>
       </tr>
-      <tr>
-        <td>Navn1</td>
-        <td>Password1</td>
-        <td>Nej</td>
+
+      <tr th:each="${user.name}">
+
       </tr>
-      <tr>
-        <td>Navn2</td>
-        <td>Password2</td>
-        <td>Nej</td>
-      </tr>
-      <tr>
-        <td>Navn3</td>
-        <td>Password3</td>
-        <td>ja</td>
-      </tr>
+
     </table>
   </div>
-
+</div>
 
 </body>
 </html>

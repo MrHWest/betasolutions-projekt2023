@@ -3,7 +3,7 @@ package com.betasolutions.projekt2023.repository;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
-
+import com.betasolutions.projekt2023.model.Task;
 import java.sql.*;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -88,6 +88,30 @@ public class Repository {
 
     }
 
+    public User getUser(String name){
+        User user = new User();
+
+        String GETUSER_QUERY = "SELECT * FROM USER where name = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //Execute QUERY
+            PreparedStatement statement = connection.prepareStatement(GETUSER_QUERY);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            String username = name;
+            int id = resultSet.getInt("id");
+            String password = resultSet.getString("password");
+            boolean isAdmin = resultSet.getBoolean("is_admin");
+            user = new User(id, username, password, isAdmin);
+
+        } catch (SQLException e){
+            System.out.println("Fejl i oprettelse");
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public void addProject(Project newProject) {
         // Gør QUERY klar
         String ADDPROJECT_QUERY = "INSERT INTO beta_solutions_db.projects(name, start_date, end_date) VALUES (?, ?, ?)";
@@ -106,16 +130,16 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void addTask(String name, int startDate, int endDate){
+    public void addTask(Task newTask){
         String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, startDate, endDate) VALUES(?,?,?)";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             //Execute QUERY
             PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
-            statement.setString(1, name);
-            statement.setInt(2, startDate);
-            statement.setInt(3, endDate);
+            statement.setString(1, newTask.getName());
+            statement.setInt(2, newTask.getStartDate());
+            statement.setInt(3, newTask.getEndDate());
             statement.execute();
 
         } catch(SQLException e){
@@ -130,30 +154,6 @@ public class Repository {
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             PreparedStatement statement = connection.prepareStatement(UPDATETASK_QUERY);
-
-public User getUser(String name){
-    User user = new User();
-
-    String GETUSER_QUERY = "SELECT * FROM USER where name = ?";
-    ConnectionManager connectionManager = new ConnectionManager();
-    try{
-        Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
-        //Execute QUERY
-        PreparedStatement statement = connection.prepareStatement(GETUSER_QUERY);
-        statement.setString(1, name);
-        ResultSet resultSet = statement.executeQuery();
-        String username = name;
-        int id = resultSet.getInt("id");
-        String password = resultSet.getString("password");
-        boolean isAdmin = resultSet.getBoolean("is_admin");
-        user = new User(id, username, password, isAdmin);
-
-    } catch (SQLException e){
-        System.out.println("Fejl i oprettelse");
-        e.printStackTrace();
-    }
-    return user;
-}
 
             statement.executeUpdate();
         } catch(SQLException e){
