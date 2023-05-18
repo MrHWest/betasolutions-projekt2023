@@ -5,6 +5,8 @@ import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
 import com.betasolutions.projekt2023.model.Task;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -127,6 +129,52 @@ public class Repository {
 
         } catch (SQLException e){
             System.out.println("Fejl i oprettelse");
+            e.printStackTrace();
+        }
+    }
+
+    public Project getProjectById(int id) {
+        Project result = new Project();
+        String SELECTPROJECT_QUERY = "SELECT name, start_date, end_date FROM beta_solutions_db.projects WHERE id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try {
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(SELECTPROJECT_QUERY);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            result.setId(id);
+            result.setName(resultSet.getString(1));
+            result.setStartDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(2))));
+            result.setSlutDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(3))));
+        } catch (SQLException e) {
+            System.out.println("Kunne ikke hente projekt-oplysninger");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void updateProject(Project project) {
+        // Gør QUERY klar
+        String UPDATEPROJECT_QUERY = "UPDATE beta_solutions_db.projects SET name = ?, start_date = ?, end_date = ? WHERE id= ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+
+        System.out.println(project.getId() + project.getName() + project.getStartDate() + project.getSlutDate());
+
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //Execute QUERY
+            PreparedStatement statement = connection.prepareStatement(UPDATEPROJECT_QUERY);
+            statement.setString(1, project.getName());
+            statement.setDate(2, Date.valueOf(project.getStartDate()));
+            statement.setDate(3, Date.valueOf(project.getSlutDate()));
+            statement.setInt(4, project.getId());
+            statement.execute();
+
+        } catch (SQLException e){
+            System.out.println("Fejl i opdatering");
             e.printStackTrace();
         }
     }

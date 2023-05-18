@@ -94,6 +94,43 @@ public class Controller {
         }
     }
 
+    @GetMapping("/opdater_projekt")
+    public String updateProject(@RequestParam(name="id", required = true) int id, Model model) {
+        // TODO: Replace this with session data when log-in system has been implemented
+        User loggedIn = new User(0, "test", "test", true);
+
+        // Redirect to login-page when not admin
+        if(!loggedIn.getAdmin()) {
+            return "redirect:/login";
+        }
+        else {
+            Project project = repository.getProjectById(id);
+            model.addAttribute("project", project);
+            return "opdaterprojekt";
+        }
+    }
+    @PostMapping("/update-project")
+    public String executeProjectUpdate(
+            @RequestParam("project-id") int id,
+            @RequestParam("project-name") String name,
+            @RequestParam(value = "project-start-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+
+        if(name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
+            // Name input is invalid.
+            return "redirect:/opdater_projekt?id=" + id +"&invalidName=true";
+            //return "redirect:/opdater_projekt?id=" + id;
+        }
+        else {
+            // All input is OK.
+            Project newProject = new Project(id, name, startDate, endDate);
+            repository.updateProject(newProject);
+            return "redirect:/opdater_projekt?id=" + id + "&success=true";
+            //return "redirect:/opdater_projekt?id=" + id;
+        }
+    }
+
     @GetMapping("/ny_bruger")
     public String newUser(){
         // TODO: Replace this with session data when log-in system has been implemented
