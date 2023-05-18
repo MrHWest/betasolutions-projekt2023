@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret nyt projekt</title>
+  <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+
+</head>
+<body>
+<h2>Projektoplysninger</h2>
+<div class="projektoplysniger">
+<form action="/update-project" method="post">
+  <input id="id-field" name="project-id" type="hidden" th:value="${project.getId()}">
+  <label for="name">Projektnavn</label>
+  <input type="text" id="name" name="project-name" th:value="${project.getName()}">
+  <label for="startdate">Start dato</label>
+  <input type="date" id="startdate" name="project-start-date" th:value="${project.getStartDate()}">
+  <label for="enddate">Slut dato</label>
+  <input type="date" id="enddate" name="project-end-date" th:value="${project.getSlutDate()}">
+    <input type="submit" value="Opret Projekt">
+  </form>
+  <div style="color: red" th:if="${param.invalidName}">
+    Input er ugyldigt.
+  </div>
+  <div style="color: yellow" th:if="${param.success}">
+    Projekt er opdateret
+  </div>
+</div>
+</body>
+</html>
