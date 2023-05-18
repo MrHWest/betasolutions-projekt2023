@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Opdater projekt</title>
+    <title>Opdater opgave</title>
+  <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+  <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-  <h1>Opdater eksisterende produkt</h1>
+  <h1>Opdater eksisterende opgave</h1>
   <form action="/update" method="post">
-    <input id="id-field" name="project-id" type="hidden" th:value="${product.id}">
+    <input id="id-field" name="task-id" type="hidden" th:value="${task.id}">
 
-    <label for="task-name">Produkt navn:</label>
-    <input id="task-name" name="project-name" type="text" th:value="${product.name}">
+    <label for="task-name">Produkt navn</label>
+    <input id="task-name" name="project-name" type="text" th:value="${task.name}">
 
-    <label for="task-startdate">Produkt pris:</label>
-    <input id="task-startdate" name="project-startDate" type="number" th:value="${product.startDate}">
+    <label for="task-startdate">Opgave startdato</label>
+    <input id="task-startdate" name="task-startDate" type="number" th:value="${task.startDate}">
 
-    <label for="task-enddate">Produkt pris:</label>
-    <input id="task-enddate" name="project-endDate" type="number" th:value="${product.endDate}">
+    <label for="task-enddate">Opgave slutdato</label>
+    <input id="task-enddate" name="task-endDate" type="number" th:value="${task.endDate}">
 
-    <input type="submit" value="Opdater produkt">
+    <input type="submit" value="Opdater opgave">
   </form>
 </div>
 </body>

@@ -1,5 +1,6 @@
 package com.betasolutions.projekt2023.repository;
 
+import com.betasolutions.projekt2023.model.Task;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;

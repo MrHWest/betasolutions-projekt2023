@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Brugeroversigt</title>
+    <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+    <link href="../static/all.css" rel="stylesheet">
+
+
+  <div class="loghead">
+    <form>
+      <div>
+        <a class="logoutbutton" th:href="${}" href="Login.html" target="_blank">Logout</a>
+        <a class="logoutbutton" href="Brugereoversigt.html" target="_blank">Brugeroversigt</a>
+        <a class="logoutbutton" href="opgaveoversigt.html" target="_blank">Projektoversigt</a>
+        <p style="text-align: center">Alpha Solutions</p>
+      </div>
+    </form>
+  </div>
+
+</head>
+<body>
+
+<div class="nyprojekt">
+  <a class="forma" th:href="">
+  Opret ny bruger
+</a></div>
+
+
+<div class="row">
+  <div class="column">
+    <table>
+      <tr>
+        <th>Brugernavn</th>
+        <th>Bruger Password</th>
+        <th>Admin</th>
+      </tr>
+      <tr>
+        <td>Navn1</td>
+        <td>Password1</td>
+        <td>Nej</td>
+      </tr>
+      <tr>
+        <td>Navn2</td>
+        <td>Password2</td>
+        <td>Nej</td>
+      </tr>
+      <tr>
+        <td>Navn3</td>
+        <td>Password3</td>
+        <td>ja</td>
+      </tr>
+    </table>
+  </div>
+
+
+</body>
+</html>
