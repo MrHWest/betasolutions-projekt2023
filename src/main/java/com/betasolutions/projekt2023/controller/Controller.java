@@ -16,6 +16,7 @@ import javax.naming.ldap.Control;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -94,6 +95,7 @@ public class Controller {
         }
     }
 
+<<<<<<< HEAD
     @GetMapping("/opdater_projekt")
     public String updateProject(@RequestParam(name="id", required = true) int id, Model model) {
         // TODO: Replace this with session data when log-in system has been implemented
@@ -129,6 +131,14 @@ public class Controller {
             return "redirect:/opdater_projekt?id=" + id + "&success=true";
             //return "redirect:/opdater_projekt?id=" + id;
         }
+=======
+
+    @GetMapping("/viewUsers")
+    public String getAllUsers(Model model){
+        List<User> users = repository.getAllUsers();
+        model.addAttribute("users", users);
+        return "viewUsers";
+>>>>>>> b36dbd0346e1fb77be169c7137a86bc81140d693
     }
 
     @GetMapping("/ny_bruger")
