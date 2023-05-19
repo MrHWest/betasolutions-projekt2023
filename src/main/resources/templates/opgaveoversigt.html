@@ -38,10 +38,10 @@
         <tbody>
         <!-- Trin 1: Gennemløb alle opgaver og vis dem i tabellen -->
         <tr th:each="task : ${tasks}">
-            <td th:text="${task.getId()}"></td>
-            <td th:text="${task.getName()}"></td>
-            <td th:text="${task.getStartDate()}"></td>
-            <td th:text="${task.getEndDate()}"></td>
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.startDate}"></td>
+            <td th:text="${task.endDate}"></td>
             <td>
                 <form>
                 <!-- Trin 2: Opret link til redigering af en specifik opgave -->

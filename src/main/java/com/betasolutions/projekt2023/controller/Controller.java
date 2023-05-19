@@ -282,6 +282,11 @@ public class Controller {
         //returner navnet på listen
         return "/opgaveoversigt";
     }
+    @GetMapping("/opretnyopgave")
+    public String createTask(){
+        return "opretnyopgave";
+    }
+
     @PostMapping("/opretnyopgave")
     public String createTask(@RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         // opret en ny opgave baseret på vores parametre
