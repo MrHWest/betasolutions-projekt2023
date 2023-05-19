@@ -19,7 +19,7 @@
     <form>
         <div>
             <!--<button class="opretnytprojektbutton">Opret nyt projekt</button>-->
-            <a class="forma" href="create.html">Opret ny opgave</a>
+            <a class="forma" href="/opretnyopgave">Opret ny opgave</a>
         </div>
     </form>
 </div>
@@ -32,27 +32,25 @@
             <th>Startdato</th>
             <th>Slutdato</th>
             <th>Opdater</th>
-            <th>Rediger</th>
             <th>Slet</th>
         </tr>
         </thead>
         <tbody>
         <!-- Trin 1: Gennemløb alle opgaver og vis dem i tabellen -->
         <tr th:each="task : ${tasks}">
-            <td th:text="${task.id}">1</td>
-            <td th:text="${task.name}">opgaveprojekt</td>
-            <td th:text="${task.startDate}">10 september</td>
-            <td th:text="${task.endDate}">20 september</td>
+            <td th:text="${task.getId()}"></td>
+            <td th:text="${task.getName()}"></td>
+            <td th:text="${task.getStartDate()}"></td>
+            <td th:text="${task.getEndDate()}"></td>
             <td>
+                <form>
                 <!-- Trin 2: Opret link til redigering af en specifik opgave -->
-                <a th:href="@{/tasks/update/{taskId}(taskId=${task.id})}" href="/update">Opdater</a>
-            </td>
-            <td>
-                <a th:href="@{/tasks/edit/{taskId}(taskId=${task.id})}" href="/edit">Rediger</a>
+                <a th:action="@{/update{taskId}(taskId=${task.id})}" href="/update">Opdater</a>
+                </form>
             </td>
             <td>
                 <!-- Trin 3: Opret link til sletning af en specifik opgave -->
-                <a th:href="@{/tasks/delete/{taskId}(taskId=${task.id})}" href="/delete">Slet</a>
+                <a th:action="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</a>
             </td>
         </tr>
         </tbody>

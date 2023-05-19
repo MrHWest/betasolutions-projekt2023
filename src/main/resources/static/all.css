@@ -220,3 +220,6 @@ label{
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.nyprojekt{
+    transform: translate(45%, 850%);
+}

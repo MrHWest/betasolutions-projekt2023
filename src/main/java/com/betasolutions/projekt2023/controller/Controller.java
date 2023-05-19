@@ -300,7 +300,7 @@ public class Controller {
         return "/opretnyopgave";
     }
 
-    @PostMapping("/update/{taskId}")
+    @PostMapping("/update{taskId}")
     public String updateTask(@PathVariable int taskId, @RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         //hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -318,9 +318,9 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "redirect./opgaveoversigt/";
+        return "/opgaveoversigt";
     }
-    @PostMapping("/delete/{taskId}")
+    @PostMapping("/delete{taskId}")
     public String deleteTask(@PathVariable int taskId, HttpSession session){
         //hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -337,7 +337,7 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "redirect:/opgaveoversigt/";
+        return "/opgaveoversigt";
     }
 
     //hjælpefunktion til at hente opgaver fra sessionen eller oprette en ny liste
