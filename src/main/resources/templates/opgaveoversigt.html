@@ -45,12 +45,12 @@
             <td>
                 <form>
                 <!-- Trin 2: Opret link til redigering af en specifik opgave -->
-                <a th:action="@{/update{taskId}(taskId=${task.id})}" href="/update">Opdater</a>
+                <a th:href="@{/update{taskId}(taskId=${task.id})}" href="/update">Opdater</a>
                 </form>
             </td>
             <td>
                 <!-- Trin 3: Opret link til sletning af en specifik opgave -->
-                <a th:action="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</a>
+                <a th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</a>
             </td>
         </tr>
         </tbody>
