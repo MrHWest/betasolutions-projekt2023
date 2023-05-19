@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Opdater opgave</title>
+  <meta charset="UTF-8">
+  <title>Opdater opgave</title>
   <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
   <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-  <h1>Opdater eksisterende opgave</h1>
-  <form action="/update" method="post">
-    <input id="id-field" name="task-id" type="hidden" th:value="${task.id}">
+<h2>Edit Task</h2>
+<form th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post" th:object="${task}">
+  <!-- Trin 7: Skjult inputfelt til at opbevare opgave-ID -->
+  <input type="hidden" th:field="${id}">
 
-    <label for="task-name">Produkt navn</label>
-    <input id="task-name" name="project-name" type="text" th:value="${task.name}">
+  <!-- Trin 8: Indtastningsfelt til redigering af opgavetitel -->
+  <label for="editTaskTitle">Opgavenavn</label>
+  <input type="text" id="editTaskTitle" th:field="${name}" required>
 
-    <label for="task-startdate">Opgave startdato</label>
-    <input id="task-startdate" name="task-startDate" type="number" th:value="${task.startDate}">
+  <!-- Trin 9: Indtastningsfelt til redigering af opgavestartdato -->
+  <label for="editStartDate">Start dato</label>
+  <input type="date" id="editStartDate" th:field="${startDate}" required>
 
-    <label for="task-enddate">Opgave slutdato</label>
-    <input id="task-enddate" name="task-endDate" type="number" th:value="${task.endDate}">
+  <!-- Trin 10: Indtastningsfelt til redigering af opgavestartdato -->
+  <label for="editEndDate">Slut dato</label>
+  <input type="date" id="editEndDate" th:field="${endDate}" required>
 
-    <input type="submit" value="Opdater opgave">
-  </form>
-</div>
+  <!-- Trin 10: Knappen til at opdatere opgaven -->
+  <button type="submit">Opdater</button>
+</form>
 </body>
 </html>

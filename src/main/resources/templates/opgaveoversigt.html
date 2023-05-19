@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Opgaveoversigt</title>
-  <!-- Thymeleaf Spring css-->
-  <link th:href="@{/all.css}" rel="stylesheet"/>
-  <!-- Local html css -->
-  <link href="../static/all.css" rel="stylesheet">
-
-  <div class="loghead">
-    <form>
-      <div>
-         <a class="logoutbutton" href="/login" target="_blank">Logout</a>
-          <a class="logoutbutton" href="/brugeroversigt">Brugeroversigt</a>
-          Alpha Solutions
-      </div>
-    </form>
-  </div>
+    <title>Tasks</title>
+    <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+    <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
-<div class="nyprojekt">
+<div class="loghead">
+    <form>
+        <div>
+            <a class="logoutbutton" href="login.html" target="_blank">Logout</a>
+            Alpha Solutions
+        </div>
+    </form>
+</div>
+<div class="nytask">
     <form>
         <div>
             <!--<button class="opretnytprojektbutton">Opret nyt projekt</button>-->
@@ -30,113 +26,37 @@
 <div class="container">
     <table>
         <thead>
-        <th>Id</th>
-        <th>Navn</th>
-        <th>Startdato</th>
-        <th>Slutdato</th>
-        <th>Update</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <tr>
+            <th>ID</th>
+            <th>Opgavenavn</th>
+            <th>Startdato</th>
+            <th>Slutdato</th>
+            <th>Opdater</th>
+            <th>Rediger</th>
+            <th>Slet</th>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="task : ${task}">
-            <td th:text="${task.id}">
-                1
-            </td>
-            <td th:text="${task.name}">
-                Byggeopgave
-            </td>
-            <td th:text="${task.startDate}">
-                24 september
-            </td>
-            <td th:text="${task.endDate}">
-                30 september
+        <!-- Trin 1: Gennemløb alle opgaver og vis dem i tabellen -->
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}">1</td>
+            <td th:text="${task.name}">opgaveprojekt</td>
+            <td th:text="${task.startDate}">10 september</td>
+            <td th:text="${task.endDate}">20 september</td>
+            <td>
+                <!-- Trin 2: Opret link til redigering af en specifik opgave -->
+                <a th:href="@{/tasks/update/{taskId}(taskId=${task.id})}" href="/update">Opdater</a>
             </td>
             <td>
-                <a th:href="@{'/update/' + ${task.name}}" href="/update">Opdater</a>
+                <a th:href="@{/tasks/edit/{taskId}(taskId=${task.id})}" href="/edit">Rediger</a>
             </td>
             <td>
-                <a th:href="@{'/edit/' + ${task.name}}" href="/edit">Rediger</a>
-            </td>
-            <td>
-                <a th:href="@{'/delete/' + ${task.name}}" href="/delete">Slet</a>
+                <!-- Trin 3: Opret link til sletning af en specifik opgave -->
+                <a th:href="@{/tasks/delete/{taskId}(taskId=${task.id})}" href="/delete">Slet</a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-
-<!--<div class="row">
-    <div class="column">
-        <table>
-            <tr>
-                <th>Opgaver</th>
-                <th>Underopgaver</th>
-            </tr>
-            <tr>
-                <td>Opg1</td>
-                <td>Uopg1</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-            <tr>
-                <td>Opg2</td>
-                <td>Uopg2</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-            <tr>
-                <td>Opg3</td>
-                <td>Uopg3</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-        </table>
-    </div>
-    <div class="column">
-        <table>
-            <tr>
-                <th>Opgaver</th>
-                <th>Underopgaver</th>
-            </tr>
-            <tr>
-                <td>Opg1</td>
-                <td>Uopg1</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-            <tr>
-                <td>Opg2</td>
-                <td>Uopg2</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-            <tr>
-                <td>Opg3</td>
-                <td>Uopg3</td>
-                <th>
-                    <a th:href="@{'/update' + ${project.name}}" href="/update">Opdater</a>
-                    <a th:href="@{'//' + ${project.name}}" href="/delete">Rediger</a>
-                    <a th:href="@{'/delete/' + ${project.name}}" href="/delete">Slet</a>
-                </th>
-            </tr>
-        </table>
-    </div>
-</div>-->
 </body>
 </html>

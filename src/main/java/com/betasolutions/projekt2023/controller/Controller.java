@@ -271,7 +271,7 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    /*@GetMapping("/")
+    /*@GetMapping("")
     public String getAllTasks(Model model, HttpSession session){
         //Hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -282,7 +282,7 @@ public class Controller {
         //returner navnet på listen
         return "tasks";
     }*/
-    /*@PostMapping("create")
+    /*@PostMapping("opretnyopgave")
     public String createTask(@RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         // opret en ny opgave baseret på vores parametre
         Task task = new Task(name, startDate, endDate);
@@ -297,7 +297,7 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "redirect:/tasks/";
+        return "opretnyopgave";
     }*/
 
     /*

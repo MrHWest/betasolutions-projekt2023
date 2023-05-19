@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Opret nyt projekt</title>
+  <title>Opretnyopgave</title>
   <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
-
+  <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
-<h2>Projektoplysninger</h2>
-<div class="projektoplysniger">
-  <form action="create-task" method="post">
-    <label for="name">Opgavenavn</label>
-    <input type="text" id="name" name="task-name">
-    <label for="startdate">Start dato</label>
-    <input type="date" id="startdate" name="task-start-date">
-    <label for="enddate">Slut dato</label>
-    <input type="date" id="enddate" name="task-end-date">
-    <input type="submit" value="Opret opgave">
+<h2>Opret opgave</h2>
+<div class="opgaveoplysninger">
+  <form action="/tasks/create" method="post">
+    <!-- Trin 4: Indtastningsfelt til oprettelse af opgavetitel -->
+    <label for="title">Opgavenavn</label>
+    <input type="text" id="title" name="title" required>
+
+    <!-- Trin 5: Indtastningsfelt til oprettelse af opgavestartdato -->
+    <label for="startDate">Start dato</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <!-- Trin 5: Indtastningsfelt til oprettelse af opgaveslutdato -->
+    <label for="endDate">Slut dato</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <!-- Trin 6: Knappen til at oprette opgaven -->
+    <button type="submit">Opret</button>
   </form>
-  <div style="color: red" th:if="${param.invalidName}">
-    Input er ugyldigt.
-  </div>
-  <div style="color: yellow" th:if="${param.success}">
-    Opgave er tilføjet
-  </div>
 </div>
 </body>
 </html>
