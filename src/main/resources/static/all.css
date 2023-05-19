@@ -163,7 +163,7 @@ table {
     transform: translate(0%, 110%);
 }
 
-th, td {
+th, td, tr {
     text-align: left;
     padding: 16px;
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Projektoversigt</title>
+    <title>Opgaveoversigt</title>
   <!-- Thymeleaf Spring css-->
   <link th:href="@{/all.css}" rel="stylesheet"/>
   <!-- Local html css -->
@@ -39,31 +39,30 @@
         <th>Delete</th>
         </thead>
         <tbody>
-        <tr th:each="project : ${projects}">
-            <td th:text="${project.id}">
+        <tr th:each="task : ${task}">
+            <td th:text="${task.id}">
                 1
             </td>
-            <td th:text="${project.name}">
+            <td th:text="${task.name}">
                 Byggeopgave
             </td>
-            <td th:text="${project.startDate}">
+            <td th:text="${task.startDate}">
                 24 september
             </td>
-            <td th:text="${project.endDate}">
+            <td th:text="${task.endDate}">
                 30 september
             </td>
             <td>
-                <a th:href="@{'/update/' + ${product.name}}" href="/update">Opdater</a>
+                <a th:href="@{'/update/' + ${task.name}}" href="/update">Opdater</a>
             </td>
             <td>
-                <a th:href="@{'/edit/' + ${product.name}}" href="/edit">Rediger</a>
+                <a th:href="@{'/edit/' + ${task.name}}" href="/edit">Rediger</a>
             </td>
             <td>
-                <a th:href="@{'/delete/' + ${product.name}}" href="/delete">Slet</a>
+                <a th:href="@{'/delete/' + ${task.name}}" href="/delete">Slet</a>
             </td>
         </tr>
         </tbody>
-
     </table>
 </div>
 
