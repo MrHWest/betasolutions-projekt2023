@@ -271,7 +271,7 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    /*@GetMapping("")
+    @GetMapping("/opgaveoversigt")
     public String getAllTasks(Model model, HttpSession session){
         //Hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -280,9 +280,9 @@ public class Controller {
         model.addAttribute("tasks", tasks);
 
         //returner navnet på listen
-        return "tasks";
-    }*/
-    /*@PostMapping("opretnyopgave")
+        return "/opgaveoversigt";
+    }
+    @PostMapping("/opretnyopgave")
     public String createTask(@RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         // opret en ny opgave baseret på vores parametre
         Task task = new Task(name, startDate, endDate);
@@ -297,11 +297,10 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "opretnyopgave";
-    }*/
+        return "/opretnyopgave";
+    }
 
-    /*
-    @PostMapping("update/{taskId}")
+    @PostMapping("/update/{taskId}")
     public String updateTask(@PathVariable int taskId, @RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         //hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -319,8 +318,8 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "redirect./tasks/";
-    }*/
+        return "redirect./opgaveoversigt/";
+    }
     @PostMapping("/delete/{taskId}")
     public String deleteTask(@PathVariable int taskId, HttpSession session){
         //hent opgaver fra session eller opret en ny liste
@@ -338,7 +337,7 @@ public class Controller {
         session.setAttribute("tasks", tasks);
 
         //omdirigerer til hovedsiden for opgaver
-        return "redirect:/tasks/";
+        return "redirect:/opgaveoversigt/";
     }
 
     //hjælpefunktion til at hente opgaver fra sessionen eller oprette en ny liste

@@ -7,7 +7,7 @@
   <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
-<h2>Edit Task</h2>
+<h2>Opdater opgave</h2>
 <form th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post" th:object="${task}">
   <!-- Trin 7: Skjult inputfelt til at opbevare opgave-ID -->
   <input type="hidden" th:field="${id}">

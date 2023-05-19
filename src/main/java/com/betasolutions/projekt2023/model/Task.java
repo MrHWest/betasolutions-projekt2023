@@ -1,7 +1,5 @@
 package com.betasolutions.projekt2023.model;
 
-import java.util.ArrayList;
-
 public class Task {
     private int id;
     private String name;
@@ -10,7 +8,7 @@ public class Task {
     private boolean isPending;
 
 
-    public Task() {
+    public Task(String name, int startDate, int endDate) {
     }
 
     public Task(int id, String name, int startDate, int endDate, boolean isPending) {
@@ -52,8 +50,8 @@ public class Task {
         return endDate;
     }
 
-    public void setEndDato(int endDato) {
-        this.endDate = endDato;
+    public void setEndDate(int endDate) {
+        this.endDate = endDate;
     }
 
     public boolean getIsPending() {
