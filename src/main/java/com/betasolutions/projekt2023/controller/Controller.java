@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.element.Name;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -267,6 +268,32 @@ public class Controller {
 
         return "redirect:/brugeroversigt";
     }
+
+    @GetMapping("/updateuser")
+    public String updateUser(@RequestParam String name){
+        repository.getUser(name);
+        return "updateuser";
+
+    }
+
+    @PostMapping("/updateuser")
+    public String udateUser(@RequestParam String name, @RequestBody User newUser){
+        User user = repository.getUser(name);
+        if (user.getId() != 0){
+            user.setPassword(newUser.getPassword());
+            user.setAdmin(newUser.getAdmin());
+
+            repository.updateUser(user);
+
+            return "redirect:/brugeroversigt";
+
+
+        }
+
+        return "updateuser";
+    }
+
+
 
 
     //Ahmad's HomeController

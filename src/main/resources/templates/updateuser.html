@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret bruger</title>
+    <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+    <link href="../static/all.css" rel="stylesheet">
+
+</head>
+<body>
+
+<--Header-->
+
+<h2>Opdater ny bruger</h2>
+<div class="projektoplysniger"¨>
+
+    <form action="opdaternybruger" method="post">
+        <label for="name">Brugernavn</label>
+        <input type="text" id="name" name="username">
+        <label for="password">Password</label>
+        <input type="text" id="password" name="password">
+        <label for="Admin">Admin</label>
+        <input type="checkbox" id="admin" name="isAdmin"><br>
+        <input type="submit" value="Submit">
+
+    </form>
+    <div style="color: red" th:if="${param.invalidName}">
+        Input er ugyldigt.
+    </div>
+    <div style="color: yellow" th:if="${param.success}">
+        Projekt er tilføjet
+    </div>
+</div>
+</body>
+</html>
