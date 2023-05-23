@@ -14,26 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class Projekt2023ApplicationTests {
 
-    User dummyUser = new User();
-
-
     @Test
     void contextLoads() {
     }
-
-
-    @BeforeEach
-    void dummyUser(){
-        dummyUser = new User(1, "admin", "1234", true);
-    }
-
-    @Test
-    void setNameTest() {
-
-        //String name = "admin";
-
-        assertEquals("admin", dummyUser.getName(), "Chris er gangsta sej" );
-    }
-
 
 }
