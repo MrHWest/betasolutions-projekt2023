@@ -22,6 +22,25 @@ class Projekt2023ApplicationTests {
     void contextLoads() {
     }
 
+    public class AhmadTestClass{
+       @Test
+       public void testGetAllTasks(){
+           //Arrange, opret en liste af opgaver med start og slutdato
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(new Task(1, "Task1", 1, 1));
+            tasks.add(new Task(2, "Task2", 2, 2));
+
+            //Simuler at hente opgaver fra sessionen
+           session.setAttribute("tasks", tasks);
+
+           //Act, kald getAllTasks metoden
+           String viewName = Controller.getAllTasks(model, session);
+
+           //Assert, vverificer at den returnerede visningsside er "tasks"
+           assertEquals("tasks", viewName);
+       }
+    }
+
 
     /*public class UserManagementTest {
         private UserManagement userManagement;
