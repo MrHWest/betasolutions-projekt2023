@@ -1,7 +1,14 @@
 package com.betasolutions.projekt2023;
 
+import com.betasolutions.projekt2023.model.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 /*import org.junit.Before;
 import org.junit.Test;
 import java.sql.Connection;
@@ -11,7 +18,6 @@ import static org.mockito.Mockito.*;*/
 
 @SpringBootTest
 class Projekt2023ApplicationTests {
-
     @Test
     void contextLoads() {
     }
