@@ -45,8 +45,8 @@
 
         <th>
 
-          <form th:action="@{/updateuser}" method="post">
-            <input type="hidden" th:name="userId">
+          <form th:action="@{/updateuser}" method="get">
+            <input type="hidden" name="id" th:value="${user.getId()}">
             <button>Opdater</button>
           </form>
 
