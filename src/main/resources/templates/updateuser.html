@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Opret bruger</title>
+    <title>Opdater bruger</title>
     <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
     <link href="../static/all.css" rel="stylesheet">
 
@@ -11,25 +11,27 @@
 
 <--Header-->
 
-<h2>Opdater ny bruger</h2>
-<div class="projektoplysniger"¨>
+<h2>Opdater bruger</h2>
+    <div class="projektoplysniger"¨>
 
-    <form action="opdaternybruger" method="post">
-        <label for="name">Brugernavn</label>
-        <input type="text" id="name" name="username">
-        <label for="password">Password</label>
-        <input type="text" id="password" name="password">
-        <label for="Admin">Admin</label>
-        <input type="checkbox" id="admin" name="isAdmin"><br>
-        <input type="submit" value="Submit">
+        <form action="/updateuser" method="post">
+            <input id="id" name="id" type="hidden" th:value="${user.getId()}">
 
-    </form>
-    <div style="color: red" th:if="${param.invalidName}">
-        Input er ugyldigt.
+            <label for="name">Brugernavn</label>
+            <input type="text" id="name" name="name" th:value="${user.getName()}">
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" th:value="${user.getPassword()}">
+            <label for="Admin">Admin</label>
+            <input type="checkbox" id="admin" name="admin" th:checked="${user.getAdmin()}"><br>
+            <input type="submit" value="Submit">
+
+        </form>
+        <div style="color: red" th:if="${param.invalidName}">
+            Input er ugyldigt.
+        </div>
+        <div style="color: yellow" th:if="${param.success}">
+            Projekt er tilføjet
+        </div>
     </div>
-    <div style="color: yellow" th:if="${param.success}">
-        Projekt er tilføjet
-    </div>
-</div>
 </body>
 </html>

@@ -1,19 +1,39 @@
 package com.betasolutions.projekt2023;
 
+import com.betasolutions.projekt2023.model.User;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import static org.mockito.Mockito.*;
+import org.springframework.test.context.junit4.SpringRunner;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class Projekt2023ApplicationTests {
+
+    User dummyUser = new User();
+
 
     @Test
     void contextLoads() {
     }
 
+
+    @BeforeEach
+    void dummyUser(){
+        dummyUser = new User(1, "admin", "1234", true);
+    }
+
+    @Test
+    void setNameTest() {
+
+        //String name = "admin";
+
+        assertEquals("admin", dummyUser.getName(), "Chris er gangsta sej" );
+    }
 
 
 }
