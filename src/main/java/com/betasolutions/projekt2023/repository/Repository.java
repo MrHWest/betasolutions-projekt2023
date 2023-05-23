@@ -192,6 +192,31 @@ public class Repository {
         return result;
     }
 
+    public List<Project> getAllProjects() {
+        String SELECTPROJECTS_QUERY = "SELECT * FROM beta_solutions_db.projects";
+        ConnectionManager connectionManager = new ConnectionManager();
+        List<Project> result = new ArrayList<Project>();
+        try {
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(SELECTPROJECTS_QUERY);
+
+            ResultSet results = statement.executeQuery();
+            while(results.next()) {
+                result.add(new Project(
+                        results.getInt(1),
+                        results.getString(2),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(3))),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4)))
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println("Kunne ikke hente projekter");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public void updateProject(Project project) {
         // Gør QUERY klar
         String UPDATEPROJECT_QUERY = "UPDATE beta_solutions_db.projects SET name = ?, start_date = ?, end_date = ? WHERE id= ?";

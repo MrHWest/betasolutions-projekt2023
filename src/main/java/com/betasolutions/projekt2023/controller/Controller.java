@@ -314,6 +314,22 @@ public class Controller {
         return "opretnyopgave";
     }
 
+    @GetMapping("/projektoversigt")
+    public String projectOverview(Model model) {
+        // TODO: Replace this with session data when log-in system has been implemented
+        User loggedIn = new User(0, "test", "test", true);
+
+        // Redirect to login page if user not logged in
+        if(loggedIn == null) {
+            return "redirect:/login";
+        }
+
+        // Show project overview
+        List<Project> projects = repository.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "projektoversigt";
+    }
+
     @PostMapping("/opretnyopgave")
     public String createTask(@RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
         // opret en ny opgave baseret på vores parametre
