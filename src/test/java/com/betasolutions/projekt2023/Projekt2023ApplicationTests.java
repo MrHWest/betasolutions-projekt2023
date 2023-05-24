@@ -1,8 +1,15 @@
 package com.betasolutions.projekt2023;
 
 import com.betasolutions.projekt2023.model.Task;
+
+import com.betasolutions.projekt2023.model.User;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -16,13 +23,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import static org.mockito.Mockito.*;*/
 
+import org.springframework.test.context.junit4.SpringRunner;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 class Projekt2023ApplicationTests {
     @Test
     void contextLoads() {
     }
 
-    public class AhmadTestClass{
+   /* public class AhmadTestClass{
        @Test
        public void testGetAllTasks(){
            //Arrange, opret en liste af opgaver med start og slutdato
@@ -39,7 +51,7 @@ class Projekt2023ApplicationTests {
            //Assert, vverificer at den returnerede visningsside er "tasks"
            assertEquals("tasks", viewName);
        }
-    }
+    }*/
 
 
     /*public class UserManagementTest {

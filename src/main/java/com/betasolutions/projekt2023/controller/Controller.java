@@ -270,29 +270,25 @@ public class Controller {
     }
 
     @GetMapping("/updateuser")
-    public String updateUser(@RequestParam String name){
-        repository.getUser(name);
-        return "updateuser";
+    public String updateUser(@RequestParam("id") int updateId, Model model){
+        User updateUser = repository.getUserBasedOnId(updateId);
 
+        model.addAttribute("user", updateUser);
+
+        return "updateuser";
     }
 
     @PostMapping("/updateuser")
-    public String udateUser(@RequestParam String name, @RequestBody User newUser){
-        User user = repository.getUser(name);
-        if (user.getId() != 0){
-            user.setPassword(newUser.getPassword());
-            user.setAdmin(newUser.getAdmin());
+    public String updateUser(@RequestParam("name") String name,
+                             @RequestParam("password") String password,
+                             @RequestParam(value = "admin", defaultValue = "false") boolean admin,
+                             @RequestParam("id") int id){
 
-            repository.updateUser(user);
+        User updateUser = new User(id, name, password, admin);
+        repository.updateUser(updateUser);
 
-            return "redirect:/brugeroversigt";
-
-
-        }
-
-        return "updateuser";
+        return "redirect:/brugeroversigt";
     }
-
 
 
 
@@ -308,6 +304,22 @@ public class Controller {
 
         //returner navnet på listen
         return "/opgaveoversigt";
+    }
+
+    @GetMapping("/projektoversigt")
+    public String projectOverview(Model model) {
+        // TODO: Replace this with session data when log-in system has been implemented
+        User loggedIn = new User(0, "test", "test", true);
+
+        // Redirect to login page if user not logged in
+        if(loggedIn == null) {
+            return "redirect:/login";
+        }
+
+        // Show project overview
+        List<Project> projects = repository.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "projektoversigt";
     }
 
     @PostMapping("/opretnyopgave")

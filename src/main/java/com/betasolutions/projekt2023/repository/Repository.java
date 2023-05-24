@@ -4,7 +4,6 @@ import com.betasolutions.projekt2023.model.Task;
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.utility.ConnectionManager;
-import com.betasolutions.projekt2023.model.Task;
 import java.sql.*;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
@@ -12,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-
 
 @org.springframework.stereotype.Repository
 public class Repository {
@@ -121,6 +119,40 @@ public class Repository {
         return users;
     }
 
+    public User getUserBasedOnId(int id){
+        User user = new User();
+
+        String GETUSERBASEDONID_QUERY = "SELECT * FROM beta_solutions_db.users WHERE id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+
+        try {
+            //db connection
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //prepared statement
+            PreparedStatement statement = connection.prepareStatement(GETUSERBASEDONID_QUERY);
+            //set parameter
+            statement.setInt(1, id);
+            //execute statement
+            ResultSet resultSet = statement.executeQuery();
+
+            //få user ud af resultSet
+            resultSet.next();
+            String name = resultSet.getString(2);
+            String password = resultSet.getString(3);
+            boolean isAdmin = resultSet.getBoolean(4);
+
+            user.setName(name);
+            user.setPassword(password);
+            user.setAdmin(isAdmin);
+            user.setId(id);
+
+        } catch (SQLException e){
+            System.out.println("Could not find user based on id");
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     //Start på John's kode
     public User getUser(String name){
         User user = new User();
@@ -186,6 +218,31 @@ public class Repository {
             result.setSlutDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(3))));
         } catch (SQLException e) {
             System.out.println("Kunne ikke hente projekt-oplysninger");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public List<Project> getAllProjects() {
+        String SELECTPROJECTS_QUERY = "SELECT * FROM beta_solutions_db.projects";
+        ConnectionManager connectionManager = new ConnectionManager();
+        List<Project> result = new ArrayList<Project>();
+        try {
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(SELECTPROJECTS_QUERY);
+
+            ResultSet results = statement.executeQuery();
+            while(results.next()) {
+                result.add(new Project(
+                        results.getInt(1),
+                        results.getString(2),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(3))),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4)))
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println("Kunne ikke hente projekter");
             e.printStackTrace();
         }
 
