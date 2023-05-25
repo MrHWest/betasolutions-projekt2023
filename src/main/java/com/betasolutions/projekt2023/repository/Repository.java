@@ -323,5 +323,26 @@ public class Repository {
             e.printStackTrace();
         }
     }
+    public Task getTaskById(int id) {
+        Task result = new Task();
+        String SELECTTASK_QUERY = "SELECT name, start_date, end_date FROM beta_solutions_db.tasks WHERE id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try {
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(SELECTTASK_QUERY);
+            statement.setInt(1, id);
 
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            result.setId(id);
+            result.setName(resultSet.getString(1));
+            result.setStartDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(2))));
+            result.setEndDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(3))));
+        } catch (SQLException e) {
+            System.out.println("Kunne ikke hente projekt-oplysninger");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

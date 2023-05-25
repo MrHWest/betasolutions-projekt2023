@@ -355,25 +355,16 @@ public class Controller {
         return "redirect:/tasks";
     }
 
+    @GetMapping("/update{taskId}")
+    public String updateTask(@PathVariable("taskId") int taskId, Model model){
+        System.out.println(taskId);
+        model.addAttribute("task",repository.getTaskById(taskId));
+        return "/update";
+    }
+
     @PostMapping("/updateTask")
-    public String updateTask(@PathVariable int taskId, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session){
-        //hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //find den opgave, der skal opdateres, baseret på taskId
-        Task task = findTaskById(taskId, tasks);
-
-        //opdater opgavens navn startdato og slutdato
-        if (task != null){
-            task.setName(name);
-
-        }
-        //gem opdateret opgaver i session
-        session.setAttribute("tasks", tasks);
-
+    public String updateTask(@ModelAttribute Task task){
         repository.updateTask(task);
-
-        //omdirigerer til hovedsiden for opgaver
         return "redirect:/tasks";
     }
     @PostMapping("/delete{taskId}")

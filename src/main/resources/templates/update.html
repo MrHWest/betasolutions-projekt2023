@@ -8,24 +8,37 @@
 </head>
 <body>
 <h2>Opdater opgave</h2>
-<form th:action="@{/updateTask}" method="post" th:object="${tasks}">
+<form action="/updateTask" method="post">
+  <input type="text" name="task-name" th:value="${task.name}">
+  <input type="date" name="start-date" th:value="${task.startDate}">
+  <input type="date" name="end-date" th:value="${task.endDate}">
+  <input type="submit" value="Opdater">
+</form>
+
+
+
+
+
+<!--<form th:action="@{/updateTask}" method="post" th:object="${tasks}">-->
   <!--Skjult inputfelt til at opbevare opgave-ID -->
-  <input type="hidden" th:field="${id}">
+  <!--<input type="hidden" th:field="${id}">-->
 
   <!--Indtastningsfelt til redigering af opgavetitel -->
-  <label for="editTaskTitle">Opgavenavn</label>
-  <input type="text" id="editTaskTitle" th:field="${name}" required>
+  <!--<label for="editTaskTitle">Opgavenavn</label>
+  <input type="text" id="editTaskTitle" th:field="${name}" required>-->
 
   <!--Indtastningsfelt til redigering af opgavestartdato -->
-  <label for="startDate">Start dato</label>
-  <input type="date" id="startDate" th:field="${startDate}" required>
+  <!--<label for="startDate">Start dato</label>
+  <input type="date" id="startDate" th:field="${startDate}" required>-->
 
   <!-- Indtastningsfelt til redigering af opgavestartdato -->
-  <label for="endDate">Slut dato</label>
-  <input type="date" id="endDate" th:field="${endDate}" required>
+  <!--<label for="endDate">Slut dato</label>
+  <input type="date" id="endDate" th:field="${endDate}" required>-->
 
   <!-- Knappen til at opdatere opgaven -->
-  <button type="submit">Opdater</button>
+  <!--<button>
+    <a href="http://localhost:5656/updateTask">Opdater</a>
+  </button>-->
 </form>
 </body>
 </html>

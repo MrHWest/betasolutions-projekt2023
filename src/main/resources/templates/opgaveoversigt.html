@@ -41,10 +41,13 @@
             <td th:text="${task.startDate}"></td>
             <td th:text="${task.endDate}"></td>
             <td>
-                <form th:action="@{/updateTask{taskId}(taskId=${task.id})}" method="post">
+                <a th:href="@{'/updateTask/' + ${task.id}}">
+                    <button>Opdater</button>
+                </a>
+                <!--<form th:action="@{/updateTask{taskId}(taskId=${task.id})}" method="post">-->
                 <!-- Opret link til redigering af en specifik opgave -->
-                <button type="submit">Opdater</button>
-                </form>
+                <!--<button type="submit">Opdater</button>-->
+                <!--</form>-->
             </td>
             <td>
                 <!-- Opret link til sletning af en specifik opgave -->
