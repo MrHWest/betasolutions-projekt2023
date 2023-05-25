@@ -27,7 +27,7 @@ public class Task {
         this.isPending = isPending;
     }
 
-    public Task(int id, String name, int startDate, int endDate) {
+    public Task(int id, String name, LocalDate startDate, LocalDate endDate) {
     }
 
     public int getId() {

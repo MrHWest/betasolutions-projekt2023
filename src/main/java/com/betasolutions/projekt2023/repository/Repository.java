@@ -287,7 +287,7 @@ public class Repository {
             System.out.println(sqlEndDate);
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
-            statement.execute();
+            //statement.execute();
 
         } catch(SQLException e){
             System.out.println("Fejl i oprettelse");

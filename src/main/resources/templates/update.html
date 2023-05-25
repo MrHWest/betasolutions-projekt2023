@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Opdater opgave</title>
@@ -8,23 +8,23 @@
 </head>
 <body>
 <h2>Opdater opgave</h2>
-<form th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post" th:object="${task}">
-  <!-- Trin 7: Skjult inputfelt til at opbevare opgave-ID -->
+<form th:action="@{/updateTask}" method="post" th:object="${tasks}">
+  <!--Skjult inputfelt til at opbevare opgave-ID -->
   <input type="hidden" th:field="${id}">
 
-  <!-- Trin 8: Indtastningsfelt til redigering af opgavetitel -->
+  <!--Indtastningsfelt til redigering af opgavetitel -->
   <label for="editTaskTitle">Opgavenavn</label>
   <input type="text" id="editTaskTitle" th:field="${name}" required>
 
-  <!-- Trin 9: Indtastningsfelt til redigering af opgavestartdato -->
-  <label for="editStartDate">Start dato</label>
-  <input type="date" id="editStartDate" th:field="${startDate}" required>
+  <!--Indtastningsfelt til redigering af opgavestartdato -->
+  <label for="startDate">Start dato</label>
+  <input type="date" id="startDate" th:field="${startDate}" required>
 
-  <!-- Trin 10: Indtastningsfelt til redigering af opgavestartdato -->
-  <label for="editEndDate">Slut dato</label>
-  <input type="date" id="editEndDate" th:field="${endDate}" required>
+  <!-- Indtastningsfelt til redigering af opgavestartdato -->
+  <label for="endDate">Slut dato</label>
+  <input type="date" id="endDate" th:field="${endDate}" required>
 
-  <!-- Trin 10: Knappen til at opdatere opgaven -->
+  <!-- Knappen til at opdatere opgaven -->
   <button type="submit">Opdater</button>
 </form>
 </body>
