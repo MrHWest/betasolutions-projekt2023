@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.lang.model.element.Name;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -294,7 +295,7 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    @GetMapping("/opgaveoversigt")
+    @GetMapping("/tasks")
     public String getAllTasks(Model model, HttpSession session){
         //Hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -303,7 +304,7 @@ public class Controller {
         model.addAttribute("tasks", tasks);
 
         //returner navnet på listen
-        return "/opgaveoversigt";
+        return "opgaveoversigt";
     }
 
     @GetMapping("/projektoversigt")
@@ -322,10 +323,21 @@ public class Controller {
         return "projektoversigt";
     }
 
-    @PostMapping("/opretnyopgave")
-    public String createTask(@RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
+    //her vises hvilken side vi er på
+    @GetMapping("/create/task")
+    public String createTask(){
+        // her returnerer vi siden opret ny opgave
+        return "opretnyopgave";
+    }
+
+    //denne postmapping creater en task
+    @PostMapping("/task")
+    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session){
         // opret en ny opgave baseret på vores parametre
-        Task task = new Task(name, startDate, endDate);
+        Task task = new Task();
+        task.setStartDate(startDate);
+        task.setEndDate(endDate);
+        task.setName(name);
 
         //hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -333,15 +345,18 @@ public class Controller {
         //tilføj den nye opgave til tasklisten
         tasks.add(task);
 
+        //her adder vi task til vores SQL
+        repository.addTask(task);
+
         //gem opdateret opgaver i session
         session.setAttribute("tasks", tasks);
 
-        //omdirigerer til hovedsiden for opgaver
-        return "redirect:/opretnyopgave";
+        //omdirigerer til opgaveoversigten efter oprettelse af opgave
+        return "redirect:/tasks";
     }
 
     @PostMapping("/update{taskId}")
-    public String updateTask(@PathVariable int taskId, @RequestParam String name, @RequestParam int startDate, @RequestParam int endDate, HttpSession session){
+    public String updateTask(@PathVariable int taskId, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session){
         //hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
 
@@ -351,8 +366,7 @@ public class Controller {
         //opdater opgavens navn startdato og slutdato
         if (task != null){
             task.setName(name);
-            task.setStartDate(startDate);
-            task.setEndDate(endDate);
+
         }
         //gem opdateret opgaver i session
         session.setAttribute("tasks", tasks);

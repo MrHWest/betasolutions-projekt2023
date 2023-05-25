@@ -1,17 +1,25 @@
 package com.betasolutions.projekt2023.model;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Task {
     private int id;
     private String name;
-    private int startDate;
-    private int endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private boolean isPending;
 
 
-    public Task(String name, int startDate, int endDate) {
+    public Task() {
     }
 
-    public Task(int id, String name, int startDate, int endDate, boolean isPending) {
+    public Task(String name, LocalDate startDate, LocalDate endDate) {
+    }
+
+    public Task(int id, String name, LocalDate startDate, LocalDate endDate, boolean isPending) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -38,19 +46,19 @@ public class Task {
         this.name = name;
     }
 
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public int getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(int endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

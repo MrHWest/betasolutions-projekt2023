@@ -279,8 +279,14 @@ public class Repository {
             //Execute QUERY
             PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
             statement.setString(1, newTask.getName());
-            statement.setInt(2, newTask.getStartDate());
-            statement.setInt(3, newTask.getEndDate());
+            Date sqlStartDate = Date.valueOf(newTask.getStartDate());
+            System.out.println("This year" + newTask.getStartDate());
+            System.out.println(sqlStartDate);
+            Date sqlEndDate = Date.valueOf(newTask.getEndDate());
+            System.out.println("this after" + newTask.getEndDate());
+            System.out.println(sqlEndDate);
+            statement.setDate(2, sqlStartDate);
+            statement.setDate(3, sqlEndDate);
             statement.execute();
 
         } catch(SQLException e){
