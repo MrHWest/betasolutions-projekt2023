@@ -9,9 +9,9 @@
 <body>
 <h2>Opdater opgave</h2>
 <form action="/updateTask" method="post">
-  <input type="text" name="task-name" th:value="${task.name}">
-  <input type="date" name="start-date" th:value="${task.startDate}">
-  <input type="date" name="end-date" th:value="${task.endDate}">
+  <input type="text" name="name" th:value="${task.name}">
+  <input type="date" name="startDate" th:value="${task.startDate}">
+  <input type="date" name="endDate" th:value="${task.endDate}">
   <input type="submit" value="Opdater">
 </form>
 
@@ -39,6 +39,5 @@
   <!--<button>
     <a href="http://localhost:5656/updateTask">Opdater</a>
   </button>-->
-</form>
 </body>
 </html>

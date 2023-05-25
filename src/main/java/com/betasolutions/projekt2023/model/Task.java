@@ -1,9 +1,6 @@
 package com.betasolutions.projekt2023.model;
 
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Task {
     private int id;

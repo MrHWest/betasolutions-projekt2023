@@ -271,8 +271,22 @@ public class Repository {
             e.printStackTrace();
         }
     }
+
+    public void getAllTasks(){
+        String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(getAllTask_query);
+            statement.execute();
+        } catch(SQLException e) {
+            System.out.println("fejl");
+            e.printStackTrace();
+        }
+    }
+
     public void addTask(Task newTask){
-        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, startDate, endDate) VALUES(?,?,?)";
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date) VALUES(?,?,?)";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
@@ -280,11 +294,9 @@ public class Repository {
             PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
             statement.setString(1, newTask.getName());
             Date sqlStartDate = Date.valueOf(newTask.getStartDate());
-            System.out.println("This year" + newTask.getStartDate());
-            System.out.println(sqlStartDate);
+
             Date sqlEndDate = Date.valueOf(newTask.getEndDate());
-            System.out.println("this after" + newTask.getEndDate());
-            System.out.println(sqlEndDate);
+
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             //statement.execute();
@@ -294,20 +306,28 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    public void updateTask(Task task){
-        //Gør QUERY klar
-        String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, startDate = ?, endDate = ? WHERE id= ?";
+
+    public void updateTask(Task task) {
+        // Gør QUERY klar
+        String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
         ConnectionManager connectionManager = new ConnectionManager();
-        try{
+        try {
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             PreparedStatement statement = connection.prepareStatement(UPDATETASK_QUERY);
-
+            Date sqlStartDate = Date.valueOf(task.getStartDate());
+            Date sqlEndDate = Date.valueOf(task.getEndDate());
+            statement.setString(1, task.getName());
+            statement.setDate(2, sqlStartDate);
+            statement.setDate(3, sqlEndDate);
+            statement.setInt(4, task.getId());
             statement.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Opdatering fejlede");
             e.printStackTrace();
         }
     }
+
+
     public void deleteTaskById(int id){
         String DELETETASK_QUERY = "DELETE FROM beta_solutions_db.tasks WHERE id = ?";
         ConnectionManager connectionManager = new ConnectionManager();
@@ -319,7 +339,6 @@ public class Repository {
             statement.executeUpdate();
         } catch (SQLException e){
             System.out.println("Kunne ikke slette task/opgave");
-            System.out.println("whatever");
             e.printStackTrace();
         }
     }
