@@ -314,6 +314,7 @@ public class Repository {
         ConnectionManager connectionManager = new ConnectionManager();
         try {
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            connection.setAutoCommit(false); //slå autocommit fra
             PreparedStatement statement = connection.prepareStatement(UPDATETASK_QUERY);
             Date sqlStartDate = Date.valueOf(task.getStartDate());
             Date sqlEndDate = Date.valueOf(task.getEndDate());
@@ -322,6 +323,8 @@ public class Repository {
             statement.setDate(3, sqlEndDate);
             statement.setInt(4, task.getId());
             statement.executeUpdate();
+            connection.commit(); //udfør commit her
+            System.out.println("hej");
         } catch (SQLException e) {
             System.out.println("Opdatering fejlede");
             e.printStackTrace();

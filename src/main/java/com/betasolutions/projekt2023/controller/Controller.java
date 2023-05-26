@@ -312,7 +312,7 @@ public class Controller {
         return "projektoversigt";
     }
     //Ahmad's HomeController
-    
+
     @GetMapping("/tasks")
     public String getAllTasks(Model model) {
         List<Task> tasks = repository.getAllTasks();
