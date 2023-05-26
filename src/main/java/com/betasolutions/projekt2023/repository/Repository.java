@@ -279,6 +279,7 @@ public class Repository {
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             PreparedStatement statement = connection.prepareStatement(getAllTask_query);
             statement.execute();
+            System.out.println("Du ved det");
         } catch(SQLException e) {
             System.out.println("fejl");
             e.printStackTrace();
@@ -346,6 +347,7 @@ public class Repository {
 
             statement.setInt(1, id);
             statement.executeUpdate();
+            System.out.println("opgaven med id " + id + " er blevet slettet.");
         } catch (SQLException e){
             System.out.println("Kunne ikke slette task/opgave");
             e.printStackTrace();
