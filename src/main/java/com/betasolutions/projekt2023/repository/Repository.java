@@ -300,6 +300,7 @@ public class Repository {
 
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
+            System.out.println("går igennem");
             //statement.execute();
 
         } catch(SQLException e){
@@ -310,7 +311,11 @@ public class Repository {
 
     public void updateTask(Task task) {
         // Gør QUERY klar
-        String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
+        final String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
+        /*int id = task.getId();
+        String name = task.getName();
+        LocalDate startDate = task.getStartDate();
+        LocalDate endDate = task.getEndDate();*/
         ConnectionManager connectionManager = new ConnectionManager();
         try {
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
