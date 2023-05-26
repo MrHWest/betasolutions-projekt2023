@@ -272,7 +272,7 @@ public class Repository {
         }
     }
 
-    public void getAllTasks(){
+    public List<Task> getAllTasks(){
         String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
@@ -283,6 +283,7 @@ public class Repository {
             System.out.println("fejl");
             e.printStackTrace();
         }
+        return null;
     }
 
     public void addTask(Task newTask){

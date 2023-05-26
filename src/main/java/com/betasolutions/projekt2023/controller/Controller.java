@@ -296,21 +296,6 @@ public class Controller {
         return "redirect:/brugeroversigt";
     }
 
-
-    //Ahmad's HomeController
-
-    @GetMapping("/tasks")
-    public String getAllTasks(Model model, HttpSession session) {
-        //Hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //tilføj opgaver til modellen, så de kan vises i listen
-        model.addAttribute("tasks", tasks);
-
-        //returner navnet på listen
-        return "opgaveoversigt";
-    }
-
     @GetMapping("/projektoversigt")
     public String projectOverview(Model model) {
         // TODO: Replace this with session data when log-in system has been implemented
@@ -326,92 +311,54 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
+    //Ahmad's HomeController
+    
+    @GetMapping("/tasks")
+    public String getAllTasks(Model model) {
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
+        return "opgaveoversigt";
+    }
 
-    //her vises hvilken side vi er på
     @GetMapping("/create/task")
     public String createTask() {
-        // her returnerer vi siden opret ny opgave
         return "opretnyopgave";
     }
 
-    //denne postmapping creater en task
     @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session) {
-        // opret en ny opgave baseret på vores parametre
+    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
         Task task = new Task();
+        task.setName(name);
         task.setStartDate(startDate);
         task.setEndDate(endDate);
-        task.setName(name);
 
-        //hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //tilføj den nye opgave til tasklisten
-        tasks.add(task);
-
-        //her adder vi task til vores SQL
         repository.addTask(task);
 
-        //gem opdateret opgaver i session
-        session.setAttribute("tasks", tasks);
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
 
-        //omdirigerer til opgaveoversigten efter oprettelse af opgave
         return "redirect:/tasks";
     }
 
     @GetMapping("/updateTask/{taskId}")
     public String updateTask(@PathVariable("taskId") int taskId, Model model) {
-        System.out.println(taskId);
-        model.addAttribute("task", repository.getTaskById(taskId));
+        Task task = repository.getTaskById(taskId);
+        model.addAttribute("task", task);
         return "/updateTask";
     }
 
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task) {
-        System.out.println(task.getName());
-        System.out.println(task.getStartDate());
-        System.out.println(task.getEndDate());
         repository.updateTask(task);
         return "redirect:/tasks";
     }
 
-    @PostMapping("/delete{taskId}")
-    public String deleteTask(@PathVariable int taskId, HttpSession session) {
-        //hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //find opgaven der skal slettes baseret på taskId
-        Task task = findTaskById(taskId, tasks);
-
-        //fjern opgaven fra tasklisten, hvis den bliver fundet
-        if (task != null) {
-            tasks.remove(task);
-        }
-
-        //gem opdaterede opgaver i sessionen
-        session.setAttribute("tasks", tasks);
-
-        //omdirigerer til hovedsiden for opgaver
+    @PostMapping("/delete/{taskId}")
+    public String deleteTask(@PathVariable int taskId, Model model) {
+        repository.deleteTaskById(taskId);
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
         return "redirect:/tasks";
     }
 
-    //hjælpefunktion til at hente opgaver fra sessionen eller oprette en ny liste
-    private List<Task> getTasksFromSession(HttpSession session) {
-        List<Task> tasks = (List<Task>) session.getAttribute("tasks");
-        if (tasks == null) {
-            tasks = new ArrayList<>();
-            session.setAttribute("tasks", tasks);
-        }
-        return tasks;
-    }
-
-    //hjælpefunktion til at finde en opgave baseret på taskId
-    private Task findTaskById(int taskId, List<Task> tasks) {
-        for (Task task : tasks) {
-            if (task.getId() == taskId) {
-                return task;
-            }
-        }
-        return null;
-    }
 }
