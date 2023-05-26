@@ -279,7 +279,7 @@ public class Repository {
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             PreparedStatement statement = connection.prepareStatement(getAllTask_query);
             statement.execute();
-            System.out.println("Du ved det");
+            System.out.println("går igennem igen");
         } catch(SQLException e) {
             System.out.println("fejl");
             e.printStackTrace();
@@ -288,21 +288,19 @@ public class Repository {
     }
 
     public void addTask(Task newTask){
-        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date) VALUES(?,?,?)";
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending) VALUES(?,?,?,false)";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
             //Execute QUERY
             PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
-            statement.setString(1, newTask.getName());
             Date sqlStartDate = Date.valueOf(newTask.getStartDate());
-
             Date sqlEndDate = Date.valueOf(newTask.getEndDate());
-
+            statement.setString(1, newTask.getName());
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             System.out.println("går igennem");
-            //statement.execute();
+            statement.execute();
 
         } catch(SQLException e){
             System.out.println("Fejl i oprettelse");
