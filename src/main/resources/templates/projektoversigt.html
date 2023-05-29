@@ -7,6 +7,16 @@
     <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
+<div class="loghead">
+    <form>
+        <div>
+            <a class="logoutbutton" href="/Login" target="_blank">Logout</a>
+            <a class="logoutbutton" href="/brugeroversigt" target="_blank">Brugeroversigt</a>
+            <a class="logoutbutton" href="/projektoversigt" target="_blank">Projektoversigt</a>
+            <p>Alpha Solutions</p>
+        </div>
+    </form>
+</div>
 <div class="container">
     <table>
         <thead>
@@ -47,10 +57,6 @@
         </tbody>
     </table>
 </div>
-<ul>
-  <li th:each="project : ${projects}">
-    <a th:href="${'/projectoversigt/'}" th:text="${project.getName()}"></a>
-  </li>
-</ul>
+
 </body>
 </html>
