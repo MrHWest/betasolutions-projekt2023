@@ -150,10 +150,11 @@ public class Controller {
     public String createProject(
             @RequestParam("project-name") String name,
             @RequestParam(value = "project-start-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam("project-isDone") boolean isDone
     ) {
 
-        if(name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
+        if(name.length() > 99 || name.length() == 0 || startDate == null || endDate == null || isDone == true) {
             // Name input is invalid.
             return "redirect:/nyt_projekt?invalidName=true";
         }
@@ -186,16 +187,17 @@ public class Controller {
             @RequestParam("project-id") int id,
             @RequestParam("project-name") String name,
             @RequestParam(value = "project-start-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(value = "project-is-active", required = false) boolean isDone
     ) {
 
-        if (name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
+        if (name.length() > 99 || name.length() == 0 || startDate == null || endDate == null || isDone == false) {
             // Name input is invalid.
             return "redirect:/opdater_projekt?id=" + id + "&invalidName=true";
             //return "redirect:/opdater_projekt?id=" + id;
         } else {
             // All input is OK.
-            Project newProject = new Project(id, name, startDate, endDate);
+            Project newProject = new Project(id, name, startDate, endDate, isDone);
             repository.updateProject(newProject);
             return "redirect:/opdater_projekt?id=" + id + "&success=true";
             //return "redirect:/opdater_projekt?id=" + id;

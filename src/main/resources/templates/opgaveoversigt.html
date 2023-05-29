@@ -53,6 +53,9 @@
                 <!-- Opret link til sletning af en specifik opgave -->
                 <button type="submit" th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</button>
             </td>
+            <td>
+                <a th:href="@{'/'}"
+            </td>
         </tr>
         </tbody>
     </table>
