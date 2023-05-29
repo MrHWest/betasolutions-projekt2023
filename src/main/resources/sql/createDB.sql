@@ -31,4 +31,7 @@ CREATE TABLE beta_solutions_db.tasks (
 
                                          `fk_tasks_id` INT(10),
                                          FOREIGN KEY (`fk_tasks_id`) REFERENCES tasks(id)
+
 );
+ALTER TABLE `beta_solutions_db`.`tasks`
+CHANGE COLUMN `is_pending` `is_pending` TINYINT(1) NULL ;

@@ -288,7 +288,7 @@ public class Repository {
     }
 
     public void addTask(Task newTask){
-        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending) VALUES(?,?,?,false)";
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id) VALUES(?,?,?,false,?)";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
@@ -299,6 +299,7 @@ public class Repository {
             statement.setString(1, newTask.getName());
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
+            statement.setInt(4, newTask.getFk_project_id());
             System.out.println("går igennem");
             statement.execute();
 

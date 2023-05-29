@@ -8,20 +8,20 @@ public class Task {
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean isPending;
-
-
+    private int fk_project_id;
     public Task() {
     }
 
     public Task(String name, LocalDate startDate, LocalDate endDate) {
     }
 
-    public Task(int id, String name, LocalDate startDate, LocalDate endDate, boolean isPending) {
+    public Task(int id, String name, LocalDate startDate, LocalDate endDate, boolean isPending, int fk_project_id) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.isPending = isPending;
+        this.fk_project_id = fk_project_id;
     }
 
     public Task(int id, String name, LocalDate startDate, LocalDate endDate) {
@@ -68,5 +68,13 @@ public class Task {
     @Override
     public String toString(){
         return "task{" + "id=" + id + ", name='" + name + '\'' + ", startDate=" + startDate + '}';
+    }
+
+    public int getFk_project_id() {
+        return fk_project_id;
+    }
+
+    public void setFk_project_id(int fk_project_id) {
+        this.fk_project_id = fk_project_id;
     }
 }
