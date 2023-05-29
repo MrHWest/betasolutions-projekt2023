@@ -17,6 +17,8 @@
   <input type="date" id="startdate" name="project-start-date" th:value="${project.getStartDate()}">
   <label for="enddate">Slut dato</label>
   <input type="date" id="enddate" name="project-end-date" th:value="${project.getSlutDate()}">
+  <<label for="isDone">done</label>
+  <input type="checkbox" id="isDone" name="isDone" th:value="${project.isDone()}"><br>
     <input type="submit" value="Opret Projekt">
   </form>
   <div style="color: red" th:if="${param.invalidName}">

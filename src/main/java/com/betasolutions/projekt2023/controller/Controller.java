@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.lang.model.element.Name;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,15 +31,15 @@ public class Controller {
     }
 
     @GetMapping("/test")
-    public String showProjektoversigt(HttpSession session, Model model) {
+    public String showProjektoversigt(HttpSession session, Model model){
 
         if (session.getAttribute("username") == "admin" &&
-                session.getAttribute("passWord") == "admin") {
+                session.getAttribute("passWord") == "admin"){
 
             return "opgaveoversigt";
         }
         if (session.getAttribute("username") == "udvikler" &&
-                session.getAttribute("passWord") == "udvikler") {
+                session.getAttribute("passWord") == "udvikler"){
             return "opgaveoversigt";
         }
         return "Login";
@@ -72,26 +71,25 @@ public class Controller {
     }*/
 
     @GetMapping("/login")
-    public String login(HttpSession session) {
+    public String login(HttpSession session){
         return "Login";
     }
 
 
     @PostMapping("/login")
-    public String loginCheck(@RequestBody String requestBody) {
+    public String loginCheck(@RequestBody String requestBody){
 
         //Gem data local
         String username = "";
         String password = "";
 
         String[] input = requestBody.split("&");
-        for (String is : input) {
-            if (is.startsWith("username=")) {
+        for (String is : input){
+            if (is.startsWith("username=")){
                 System.out.println(is);
                 username = is;
                 username = username.replace("username=", "");
-            }
-            if (is.startsWith("password=")) {
+            } if (is.startsWith("password=")){
                 System.out.println(is);
                 password = is;
                 password = password.replace("password=", "");
@@ -105,12 +103,11 @@ public class Controller {
         repository.getUser(username);
 
         //Hvis data ikke passer, send tilbage til login
-        if (!password.equals(user.getPassword())) {
+        if (!password.equals(user.getPassword())){
             return "login";
         } else { //Hvis data passer, send videre til korrekte side.
-            if (user.getAdmin() == true) {
-                return "opgaveoversigt";
-            } else {
+            if (user.getAdmin()==true){return "opgaveoversigt";
+            } else{
                 return "udviklerprojektoversigt";
             }
 
@@ -141,9 +138,10 @@ public class Controller {
         User loggedIn = new User(0, "test", "test", true);
 
         // Redirect to login-page when not admin
-        if (!loggedIn.getAdmin()) {
+        if(!loggedIn.getAdmin()) {
             return "redirect:/login";
-        } else {
+        }
+        else {
             return "Opretnytprojekt";
         }
     }
@@ -155,10 +153,11 @@ public class Controller {
             @RequestParam(value = "project-end-date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
 
-        if (name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
+        if(name.length() > 99 || name.length() == 0 || startDate == null || endDate == null) {
             // Name input is invalid.
             return "redirect:/nyt_projekt?invalidName=true";
-        } else {
+        }
+        else {
             // All input is OK.
             Project newProject = new Project(name, startDate, endDate);
             repository.addProject(newProject);
@@ -168,20 +167,20 @@ public class Controller {
 
 
     @GetMapping("/opdater_projekt")
-    public String updateProject(@RequestParam(name = "id", required = true) int id, Model model) {
+    public String updateProject(@RequestParam(name="id", required = true) int id, Model model) {
         // TODO: Replace this with session data when log-in system has been implemented
         User loggedIn = new User(0, "test", "test", true);
 
         // Redirect to login-page when not admin
-        if (!loggedIn.getAdmin()) {
+        if(!loggedIn.getAdmin()) {
             return "redirect:/login";
-        } else {
+        }
+        else {
             Project project = repository.getProjectById(id);
             model.addAttribute("project", project);
             return "opdaterprojekt";
         }
     }
-
     @PostMapping("/update-project")
     public String executeProjectUpdate(
             @RequestParam("project-id") int id,
@@ -202,9 +201,8 @@ public class Controller {
             //return "redirect:/opdater_projekt?id=" + id;
         }
     }
-
     @GetMapping("/brugeroversigt")
-    public String getAllUsers(Model model) {
+    public String getAllUsers(Model model){
         List<User> users = repository.getAllUsers();
         model.addAttribute("users", users);
         return "brugeroversigt";
@@ -213,12 +211,12 @@ public class Controller {
 
 
     @GetMapping("/opretnybruger")
-    public String newUser() {
+    public String newUser(){
         return "opretnybruger";
     }
 
     @PostMapping("/opretnybruger")
-    public String newUser(@RequestBody String requestBody) {
+    public String newUser(@RequestBody String requestBody){
 
         System.out.println("RequestBody: " + requestBody);
         //Gem data local
@@ -227,18 +225,16 @@ public class Controller {
         boolean isAdmin = false;
 
         String[] input = requestBody.split("&");
-        for (String userInput : input) {
-            if (userInput.startsWith("username=")) {
+        for (String userInput : input){
+            if (userInput.startsWith("username=")){
                 System.out.println("username " + userInput);
                 username = userInput;
                 username = username.replace("username=", "");
-            }
-            if (userInput.startsWith("password=")) {
+            } if (userInput.startsWith("password=")){
                 System.out.println("password " + userInput);
                 password = userInput;
                 password = password.replace("password=", "");
-            }
-            if (userInput.equals("isAdmin=on")) {
+            } if (userInput.equals("isAdmin=on")){
                 isAdmin = true;
                 System.out.println("isAdmin " + isAdmin);
             }
@@ -251,7 +247,7 @@ public class Controller {
         repository.getUser(username);
 
         //Hvis ja, bed om ny username
-        if (username.length() > 0 && password.length() > 0) {
+        if(username.length() > 0 && password.length() > 0) {
             if (!username.equals(user.getName())) {
                 user.setName(username);
                 user.setPassword(password);
@@ -264,8 +260,7 @@ public class Controller {
 
                 return "opretnybruger";
             }
-        }
-        return "opretnybruger";
+        } return "opretnybruger";
     }
 
     @PostMapping("/deleteuser")
@@ -276,7 +271,7 @@ public class Controller {
     }
 
     @GetMapping("/updateuser")
-    public String updateUser(@RequestParam("id") int updateId, Model model) {
+    public String updateUser(@RequestParam("id") int updateId, Model model){
         User updateUser = repository.getUserBasedOnId(updateId);
 
         model.addAttribute("user", updateUser);
@@ -288,12 +283,28 @@ public class Controller {
     public String updateUser(@RequestParam("name") String name,
                              @RequestParam("password") String password,
                              @RequestParam(value = "admin", defaultValue = "false") boolean admin,
-                             @RequestParam("id") int id) {
+                             @RequestParam("id") int id){
 
         User updateUser = new User(id, name, password, admin);
         repository.updateUser(updateUser);
 
         return "redirect:/brugeroversigt";
+    }
+
+
+
+    //Ahmad's HomeController
+
+    @GetMapping("/tasks")
+    public String getAllTasks(Model model, HttpSession session){
+        //Hent opgaver fra session eller opret en ny liste
+        List<Task> tasks = getTasksFromSession(session);
+
+        //tilføj opgaver til modellen, så de kan vises i listen
+        model.addAttribute("tasks", tasks);
+
+        //returner navnet på listen
+        return "opgaveoversigt";
     }
 
     @GetMapping("/projektoversigt")
@@ -302,7 +313,7 @@ public class Controller {
         User loggedIn = new User(0, "test", "test", true);
 
         // Redirect to login page if user not logged in
-        if (loggedIn == null) {
+        if(loggedIn == null) {
             return "redirect:/login";
         }
 
@@ -311,54 +322,89 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
-    //Ahmad's HomeController
 
-    @GetMapping("/tasks")
-    public String getAllTasks(Model model) {
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
-        return "opgaveoversigt";
-    }
-
+    //her vises hvilken side vi er på
     @GetMapping("/create/task")
-    public String createTask() {
+    public String createTask(){
+        // her returnerer vi siden opret ny opgave
         return "opretnyopgave";
     }
 
+    //denne postmapping creater en task
     @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session){
+        // opret en ny opgave baseret på vores parametre
         Task task = new Task();
-        task.setName(name);
         task.setStartDate(startDate);
         task.setEndDate(endDate);
+        task.setName(name);
 
+        //hent opgaver fra session eller opret en ny liste
+        List<Task> tasks = getTasksFromSession(session);
+
+        //tilføj den nye opgave til tasklisten
+        tasks.add(task);
+
+        //her adder vi task til vores SQL
         repository.addTask(task);
 
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
+        //gem opdateret opgaver i session
+        session.setAttribute("tasks", tasks);
 
+        //omdirigerer til opgaveoversigten efter oprettelse af opgave
         return "redirect:/tasks";
     }
 
-    @GetMapping("/updateTask/{taskId}")
-    public String updateTask(@PathVariable("taskId") int taskId, Model model) {
-        Task task = repository.getTaskById(taskId);
-        model.addAttribute("task", task);
-        return "/updateTask";
+    @GetMapping("/update{taskId}")
+    public String updateTask(@PathVariable("taskId") int taskId, Model model){
+        System.out.println(taskId);
+        model.addAttribute("task",repository.getTaskById(taskId));
+        return "/update";
     }
 
     @PostMapping("/updateTask")
-    public String updateTask(@ModelAttribute Task task) {
+    public String updateTask(@ModelAttribute Task task){
         repository.updateTask(task);
         return "redirect:/tasks";
     }
+    @PostMapping("/delete{taskId}")
+    public String deleteTask(@PathVariable int taskId, HttpSession session){
+        //hent opgaver fra session eller opret en ny liste
+        List<Task> tasks = getTasksFromSession(session);
 
-    @PostMapping("/delete/{taskId}")
-    public String deleteTask(@PathVariable int taskId, Model model) {
-        repository.deleteTaskById(taskId);
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
+        //find opgaven der skal slettes baseret på taskId
+        Task task = findTaskById(taskId, tasks);
+
+        //fjern opgaven fra tasklisten, hvis den bliver fundet
+        if (task != null){
+            tasks.remove(task);
+        }
+
+        //gem opdaterede opgaver i sessionen
+        session.setAttribute("tasks", tasks);
+
+        //omdirigerer til hovedsiden for opgaver
         return "redirect:/tasks";
+    }
+
+    //hjælpefunktion til at hente opgaver fra sessionen eller oprette en ny liste
+    private List<Task> getTasksFromSession(HttpSession session){
+        List<Task> tasks = (List<Task>) session.getAttribute("tasks");
+        if (tasks == null){
+            tasks = new ArrayList<>();
+            session.setAttribute("tasks", tasks);
+        }
+        return tasks;
+    }
+
+    //hjælpefunktion til at finde en opgave baseret på taskId
+    private Task findTaskById(int taskId, List<Task> tasks){
+        for(Task task : tasks){
+            if (task.getId() == taskId){
+                return task;
+            }
+        }
+        return null;
     }
 
 }

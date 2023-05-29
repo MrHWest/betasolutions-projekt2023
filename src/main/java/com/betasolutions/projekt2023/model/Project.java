@@ -9,7 +9,7 @@ public class Project {
     private String name;
     private LocalDate startDate;
     private LocalDate slutDate;
-
+    private boolean isDone;
     public Project() {
     }
 
@@ -18,6 +18,14 @@ public class Project {
         this.name = name;
         this.startDate = startDate;
         this.slutDate = slutDate;
+    }
+
+    public Project(int id, String name, LocalDate startDate, LocalDate slutDate, boolean isDone) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.slutDate = slutDate;
+        this.isDone = isDone;
     }
 
     public Project(String name, LocalDate startDate, LocalDate slutDate) {
@@ -56,5 +64,13 @@ public class Project {
 
     public void setSlutDate(LocalDate slutDate) {
         this.slutDate = slutDate;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }

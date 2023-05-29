@@ -3,11 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Projektoversigt</title>
+    <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+    <link href="../static/all.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>projektname</th>
+            <th>Startdato</th>
+            <th>Slutdato</th>
+            <th>Opdater</th>
+            <th>done</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Gennemløb alle opgaver og vis dem i tabellen -->
+        <tr th:each="projects : ${projects}">
+            <td th:text="${projects.id}"></td>
+            <td th:text="${projects.name}"></td>
+            <td th:text="${projects.startDate}"></td>
+            <td th:text="${projects.slutDate}"></td>
+            <td th:text="${projects.isDone}"></td>
+            <td>
+                <a th:href="@{'/updateProject/' + ${projects.id}}">
+                    <button>Opdater</button>
+                </a>
+                <!--<form th:action="@{/updateTask{taskId}(taskId=${task.id})}" method="post">-->
+                <!-- Opret link til redigering af en specifik opgave -->
+                <!--<button type="submit">Opdater</button>-->
+                <!--</form>-->
+            </td>
+            <td>
+                <!-- Opret link til sletning af en specifik opgave -->
+                <button type="submit" th:href="@{/delete{projectsId}(projectsId=${projects.id})}" href="/isDone">Done</button>
+            </td>
+            <td>
+                <a th:href="@{'/'}"
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <ul>
   <li th:each="project : ${projects}">
-    <a th:href="${'/opgaveoversigt'}" th:text="${project.getName()}"></a>
+    <a th:href="${'/projectoversigt/'}" th:text="${project.getName()}"></a>
   </li>
 </ul>
 </body>
