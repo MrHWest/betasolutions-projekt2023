@@ -24,16 +24,14 @@ CREATE TABLE beta_solutions_db.tasks (
                                          `start_date` DATE,
                                          `end_date` DATE,
 
-                                         `is_pending` BOOLEAN NOT NULL,
-                                         ALTER TABLE `beta_solutions_db`.`tasks`
-                                             CHANGE COLUMN `is_pending` `is_pending` TINYINT(1) NULL ;
-                                         `is_done` BOOLEAN NOT NULL,
+                                         `is_pending` BOOLEAN,
+
+                                         `is_done` BOOLEAN,
 
                                          `fk_project_id` INT NOT NULL,
                                          FOREIGN KEY (`fk_project_id`) REFERENCES projects(id),
 
                                          `fk_tasks_id` INT(10),
                                          FOREIGN KEY (`fk_tasks_id`) REFERENCES tasks(id)
-
 
 );
