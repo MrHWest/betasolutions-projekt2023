@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Opdater opgave</title>
+  <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
+  <link href="../static/all.css" rel="stylesheet">
+</head>
+<body>
+<h2>Opdater opgave</h2>
+<form action="/updateTask" method="post">
+  <input type="hidden" name="id" th:value="${task.id}"> <!--her havde vi problemet med vores opdatering i databasen-->
+  <input type="text" name="name" th:value="${task.name}">
+  <input type="date" name="startDate" th:value="${task.startDate}">
+  <input type="date" name="endDate" th:value="${task.endDate}">
+  <input type="submit" value="Opdater">
+</form>
+</body>
+</html>

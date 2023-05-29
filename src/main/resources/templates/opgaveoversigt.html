@@ -17,7 +17,7 @@
     </form>
 </div>
 <div class="nytask">
-            <button type="button" href="/create/task" class="forma">Opret ny opgave</button>
+            <button type="button" class="forma">Opret ny opgave</button>
            <!-- th:action="@{/create/task}" method="post"-->
          <!--  <a class="forma" th:href="/create/tasks">Opret ny opgave</a>-->
 </div>
@@ -44,14 +44,14 @@
                 <a th:href="@{'/updateTask/' + ${task.id}}">
                     <button>Opdater</button>
                 </a>
-                <!--<form th:action="@{/updateTask{taskId}(taskId=${task.id})}" method="post">-->
-                <!-- Opret link til redigering af en specifik opgave -->
-                <!--<button type="submit">Opdater</button>-->
-                <!--</form>-->
             </td>
             <td>
+                <form action="/delete/{taskId}" method="post">
+                    <input type="hidden" name="_method" value="post">
+                    <input type="submit" value="Slet opgave">
+                </form>
                 <!-- Opret link til sletning af en specifik opgave -->
-                <button type="submit" th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</button>
+                <!--<button type="submit" th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</button>-->
             </td>
             <td>
                 <a th:href="@{'/'}"

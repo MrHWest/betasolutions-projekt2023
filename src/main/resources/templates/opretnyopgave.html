@@ -10,19 +10,19 @@
 <h2>Opret opgave</h2>
 <div class="opgaveoplysninger">
   <form th:action="@{/task}" method="post">
-    <!-- Trin 4: Indtastningsfelt til oprettelse af opgavetitel -->
+    <!--Indtastningsfelt til oprettelse af opgavetitel -->
     <label for="title">Opgavenavn</label>
     <input type="text" id="title" name="name" required>
 
-    <!-- Trin 5: Indtastningsfelt til oprettelse af opgavestartdato -->
+    <!--Indtastningsfelt til oprettelse af opgavestartdato -->
     <label for="startDate">Start dato</label>
     <input type="date" id="startDate" name="startDate" required>
 
-    <!-- Trin 5: Indtastningsfelt til oprettelse af opgaveslutdato -->
+    <!--Indtastningsfelt til oprettelse af opgaveslutdato -->
     <label for="endDate">Slut dato</label>
     <input type="date" id="endDate" name="endDate" required>
 
-    <!-- Trin 6: Knappen til at oprette opgaven -->
+    <!--Knappen til at oprette opgaven -->
     <button type="submit">Opret</button>
   </form>
 </div>
