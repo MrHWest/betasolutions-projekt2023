@@ -6,30 +6,25 @@
     <link th:href="@{/all.css}" href="../static/all.css" rel="stylesheet">
     <link href="../static/all.css" rel="stylesheet">
 
-
-  <div class="loghead">
-    <form>
-      <div>
-        <a class="logoutbutton" href="/Login" target="_blank">Logout</a>
-        <a class="logoutbutton" href="/brugeroversigt" target="_blank">Brugeroversigt</a>
-        <a class="logoutbutton" href="/projektoversigt" target="_blank">Projektoversigt</a>
-        <p>Alpha Solutions</p>
-      </div>
-    </form>
-  </div>
-
 </head>
 <body>
-<div class="row">
-  <div class="nyprojekt">
-    <a class="forma" href="/opretnybruger">
-    Opret ny bruger
-  </a>
-  </div>
+
+<div class="loghead">
+  <form>
+    <div>
+      <a class="logoutbutton" href="/Login" target="_blank">Logout</a>
+      <a class="logoutbutton" href="/brugeroversigt" target="_blank">Brugeroversigt</a>
+      <a class="logoutbutton" href="/projektoversigt" target="_blank">Projektoversigt</a>
+    </div>
+  </form>
 </div>
 
-<div class="row">
-  <div class="column">
+<div class="nyprojekt">
+  <a class="forma" href="/opretnybruger">
+    Opret ny bruger
+  </a>
+</div>
+
     <table>
       <tr>
         <th>Brugernavn</th>
@@ -59,6 +54,5 @@
       </tr>
     </table>
   </div>
-</div>
 </body>
 </html>
