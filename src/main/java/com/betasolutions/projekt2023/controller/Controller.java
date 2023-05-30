@@ -337,26 +337,47 @@ public class Controller {
         return "opgaveoversigt";
     }
 
+    @GetMapping("/subtasks")
+    public String getSubTasks(
+            @RequestParam(name = "proj_id", required = true) int projectId,
+            @RequestParam(name = "parent_task_id", required = true) int parentTaskId,
+            Model model
+    ) {
+        List<Task> tasks = repository.getTasksByParentId(parentTaskId);
+        model.addAttribute("tasks", tasks);
+        //returner tasks-siden
+        return "opgaveoversigt";
+    }
+
     @GetMapping("/create/task")
     public String createTask(
-            @RequestParam(name = "proj_id", required = true) int projectId
+            @RequestParam(name = "proj_id", required = true) int projectId,
+            @RequestParam(name = "parent_id", required = false) Integer parentId
     ) {
         return "opretnyopgave";
     }
 
     @PostMapping("/task")
-    public String createTask(@RequestParam int proj_id, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+    public String createTask(@RequestParam(name = "parent_id", required = false) Integer parent_id, @RequestParam int proj_id, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        // if parent_id is 0, it has not been instantiated
+        // No parent task present
         Task task = new Task(
                 name,
                 startDate,
                 endDate,
                 false,
-                proj_id
+                proj_id,
+                parent_id
         );
 
         if(name.length() > 99) {
             // input is invalid.
-            return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
+            if(parent_id != null) {
+                return "redirect:/create/task?proj_id=" + proj_id + "&parent_id=" + parent_id + "&invalidName=true";
+            }
+            else {
+                return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
+            }
         }
 
         //tilføjer opgaven til repository

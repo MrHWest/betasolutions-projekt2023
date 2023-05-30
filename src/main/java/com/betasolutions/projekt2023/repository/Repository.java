@@ -295,7 +295,7 @@ public class Repository {
 
     public void addTask(Task newTask){
         //sql-query for at tilføje en ny opgave til databasen
-        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id) VALUES(?,?,?,false,?)";
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id) VALUES(?,?,?,false,?,?)";
         //opretter en ConnectionManger til at håndtere forbindelsen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try{
@@ -311,6 +311,12 @@ public class Repository {
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             statement.setInt(4, newTask.getFk_project_id());
+            if(newTask.getFk_tasks_id() != null) {
+                statement.setInt(5, newTask.getFk_tasks_id());
+            }
+            else {
+                statement.setNull(5, java.sql.Types.NULL);
+            }
             //udfører sql-query
             System.out.println("går igennem");
             statement.execute();
@@ -427,6 +433,32 @@ public class Repository {
                         LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4))),
                         results.getBoolean(5),
                         projectId
+                ));
+            }
+        } catch(SQLException e) {
+            System.out.println("Error while fetching task data");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<Task> getTasksByParentId(int parentId) {
+        List<Task> result = new ArrayList<Task>();
+        String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks WHERE beta_solutions_db.tasks.fk_tasks_id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(getAllTask_query);
+            statement.setInt(1, parentId);
+            ResultSet results = statement.executeQuery();
+            while(results.next()) {
+                result.add(new Task(
+                        results.getInt(1),
+                        results.getString(2),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(3))),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4))),
+                        results.getBoolean(5),
+                        parentId
                 ));
             }
         } catch(SQLException e) {
