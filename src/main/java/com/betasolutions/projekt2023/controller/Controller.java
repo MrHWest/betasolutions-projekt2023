@@ -323,93 +323,11 @@ public class Controller {
         return "projektoversigt";
     }
 
-    //her vises hvilken side vi er på
-    /*@GetMapping("/create/task")
-    public String createTask(){
-        // her returnerer vi siden opret ny opgave
-        return "opretnyopgave";
-    }
-
-    //denne postmapping creater en task
-    @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, HttpSession session){
-        // opret en ny opgave baseret på vores parametre
-        Task task = new Task();
-        task.setStartDate(startDate);
-        task.setEndDate(endDate);
-        task.setName(name);
-
-        //hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //tilføj den nye opgave til tasklisten
-        tasks.add(task);
-
-        //her adder vi task til vores SQL
-        repository.addTask(task);
-
-        //gem opdateret opgaver i session
-        session.setAttribute("tasks", tasks);
-
-        //omdirigerer til opgaveoversigten efter oprettelse af opgave
-        return "redirect:/tasks";
-    }
-
-    @GetMapping("/update{taskId}")
-    public String updateTask(@PathVariable("taskId") int taskId, Model model){
-        System.out.println(taskId);
-        model.addAttribute("task",repository.getTaskById(taskId));
-        return "/update";
-    }
-
-    @PostMapping("/updateTask")
-    public String updateTask(@ModelAttribute Task task){
-        repository.updateTask(task);
-        return "redirect:/tasks";
-    }
-    @PostMapping("/delete{taskId}")
-    public String deleteTask(@PathVariable int taskId, HttpSession session){
-        //hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //find opgaven der skal slettes baseret på taskId
-        Task task = findTaskById(taskId, tasks);
-
-        //fjern opgaven fra tasklisten, hvis den bliver fundet
-        if (task != null){
-            tasks.remove(task);
-        }
-
-        //gem opdaterede opgaver i sessionen
-        session.setAttribute("tasks", tasks);
-
-        //omdirigerer til hovedsiden for opgaver
-        return "redirect:/tasks";
-    }
-
-    //hjælpefunktion til at hente opgaver fra sessionen eller oprette en ny liste
-    private List<Task> getTasksFromSession(HttpSession session){
-        List<Task> tasks = (List<Task>) session.getAttribute("tasks");
-        if (tasks == null){
-            tasks = new ArrayList<>();
-            session.setAttribute("tasks", tasks);
-        }
-        return tasks;
-    }
-
-    //hjælpefunktion til at finde en opgave baseret på taskId
-    private Task findTaskById(int taskId, List<Task> tasks){
-        for(Task task : tasks){
-            if (task.getId() == taskId){
-                return task;
-            }
-        }
-        return null;
-    }*/
     @GetMapping("/tasks")
     public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
+        //returner tasks-siden
         return "opgaveoversigt";
     }
 
@@ -435,6 +353,7 @@ public class Controller {
             return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
         }
 
+        //tilføjer opgaven til repository
         repository.addTask(task);
 
         return "redirect:/tasks?proj_id=" + proj_id;
@@ -442,22 +361,30 @@ public class Controller {
 
     @GetMapping("/updateTask/{taskId}")
     public String updateTask(@PathVariable("taskId") int taskId, Model model) {
+        //henter opgaven med den angivne taskId fra repository
         Task task = repository.getTaskById(taskId);
+        //tilføjer opgaven til task-modellen
         model.addAttribute("task", task);
+        //returnerer updateTask-siden for at opdatere opgaven
         return "/updateTask";
     }
 
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task) {
+        //opdater opgaven i repository
         repository.updateTask(task);
+        //omdirigerer til tasks-siden
         return "redirect:/tasks";
     }
 
     @PostMapping("/delete/{taskId}")
     public String deleteTask(@PathVariable int taskId, Model model) {
+        //sletter opgaven med den angivne taskId fra repository
         repository.deleteTaskById(taskId);
+        //henter alle opgaver fra repo og tilføjer dem til task-modellen
         List<Task> tasks = repository.getAllTasks();
         model.addAttribute("tasks", tasks);
+        //omdirigerer til tasks-siden
         return "redirect:/tasks";
     }
 
