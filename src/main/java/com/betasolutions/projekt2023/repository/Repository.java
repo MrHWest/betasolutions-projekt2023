@@ -376,7 +376,7 @@ public class Repository {
         return result;
     }
 
-    public List<Task> getTaskByProjectId(int projectId) {
+    public List<Task> getTasksByProjectId(int projectId) {
         List<Task> result = new ArrayList<Task>();
         String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks WHERE beta_solutions_db.tasks.fk_project_id = ?";
         ConnectionManager connectionManager = new ConnectionManager();
@@ -399,6 +399,6 @@ public class Repository {
             System.out.println("Error while fetching task data");
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 }

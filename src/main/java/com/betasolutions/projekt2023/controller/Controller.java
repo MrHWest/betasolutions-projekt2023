@@ -408,7 +408,7 @@ public class Controller {
     }*/
     @GetMapping("/tasks/{proj_id}")
     public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
-        List<Task> tasks = repository.getTaskByProjectId(projectId);
+        List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         return "opgaveoversigt";
     }
