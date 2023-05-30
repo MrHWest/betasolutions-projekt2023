@@ -391,7 +391,7 @@ public class Repository {
                         results.getString(2),
                         LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(3))),
                         LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4))),
-                        false,
+                        results.getBoolean(5),
                         projectId
                 ));
             }
