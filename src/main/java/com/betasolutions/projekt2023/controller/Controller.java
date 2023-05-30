@@ -414,7 +414,9 @@ public class Controller {
     }
 
     @GetMapping("/create/task")
-    public String createTask() {
+    public String createTask(
+            @RequestParam(name = "proj_id", required = true) int projectId
+    ) {
         return "opretnyopgave";
     }
 
