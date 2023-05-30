@@ -24,9 +24,6 @@ public class Task {
         this.fk_project_id = fk_project_id;
     }
 
-    public Task(int id, String name, LocalDate startDate, LocalDate endDate) {
-    }
-
     public int getId() {
         return id;
     }

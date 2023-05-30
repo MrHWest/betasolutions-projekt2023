@@ -406,9 +406,9 @@ public class Controller {
         }
         return null;
     }*/
-    @GetMapping("/tasks")
-    public String getAllTasks(Model model) {
-        List<Task> tasks = repository.getAllTasks();
+    @GetMapping("/tasks/{proj_id}")
+    public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
+        List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         return "opgaveoversigt";
     }
