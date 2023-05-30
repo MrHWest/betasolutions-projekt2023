@@ -28,6 +28,9 @@
     <!--Knappen til at oprette opgaven -->
     <button type="submit">Opret</button>
   </form>
+  <div style="color: red" th:if="${param.invalidName}">
+    Input er ugyldigt.
+  </div>
 </div>
 </body>
 </html>

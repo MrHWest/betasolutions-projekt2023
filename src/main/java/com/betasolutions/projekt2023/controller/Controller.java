@@ -421,18 +421,23 @@ public class Controller {
     }
 
     @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
-        Task task = new Task();
-        task.setName(name);
-        task.setStartDate(startDate);
-        task.setEndDate(endDate);
+    public String createTask(@RequestParam int proj_id, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        Task task = new Task(
+                name,
+                startDate,
+                endDate,
+                false,
+                proj_id
+        );
+
+        if(name.length() > 99) {
+            // input is invalid.
+            return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
+        }
 
         repository.addTask(task);
 
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
-
-        return "redirect:/tasks";
+        return "redirect:/tasks/" + proj_id;
     }
 
     @GetMapping("/updateTask/{taskId}")
