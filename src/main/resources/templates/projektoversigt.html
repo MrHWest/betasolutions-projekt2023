@@ -25,6 +25,7 @@
                 <th>projektname</th>
                 <th>Startdato</th>
                 <th>Slutdato</th>
+                <th>Er færdig</th>
                 <th>Opdater</th>
                 <th>done</th>
             </tr>
@@ -49,9 +50,6 @@
             <td>
                 <!-- Opret link til sletning af en specifik opgave -->
                 <button type="submit" th:href="@{/delete{projectsId}(projectsId=${projects.id})}" href="/isDone">Done</button>
-            </td>
-            <td>
-                <a th:href="@{'/'}"
             </td>
         </tr>
         </tbody>

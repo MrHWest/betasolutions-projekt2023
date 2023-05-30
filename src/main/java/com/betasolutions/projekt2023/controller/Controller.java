@@ -77,7 +77,7 @@ public class Controller {
 
 
     @PostMapping("/login")
-    public String loginCheck(@RequestBody String requestBody){
+    public String loginCheck(@RequestBody String requestBody, HttpSession session){
 
         //Gem data local
         String username = "";
@@ -97,15 +97,20 @@ public class Controller {
             }
         }
 
-        //check om data passer med DB
 
         User user = repository.getUser(username);
-        repository.getUser(username);
+        //repository.getUser(username);
 
+        //check om data passer med DB
         //Hvis data ikke passer, send tilbage til login
         if (!password.equals(user.getPassword())){
             return "login";
-        } else { //Hvis data passer, send videre til korrekte side.
+        } else {
+
+            // Create user session
+            session.setAttribute("user", user);
+
+            //Hvis data passer, send videre til korrekte side.
             if (user.getAdmin()==true){return "opgaveoversigt";
             } else{
                 return "udviklerprojektoversigt";
