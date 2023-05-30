@@ -378,7 +378,7 @@ public class Repository {
 
     public List<Task> getTasksByProjectId(int projectId) {
         List<Task> result = new ArrayList<Task>();
-        String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks WHERE beta_solutions_db.tasks.fk_project_id = ?";
+        String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks WHERE beta_solutions_db.tasks.fk_project_id = ? AND beta_solutions_db.tasks.fk_tasks_id IS NULL";
         ConnectionManager connectionManager = new ConnectionManager();
         try{
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
