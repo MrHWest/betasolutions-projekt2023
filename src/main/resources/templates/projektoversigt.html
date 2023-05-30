@@ -34,7 +34,7 @@
         <!-- Gennemløb alle opgaver og vis dem i tabellen -->
         <tr th:each="projects : ${projects}">
             <td th:text="${projects.id}"></td>
-            <td th:text="${projects.name}"></td>
+            <td><a th:text="${projects.name}" th:href="@{'/tasks'(proj_id=${projects.id})}"></a></td>
             <td th:text="${projects.startDate}"></td>
             <td th:text="${projects.slutDate}"></td>
             <td th:text="${projects.isDone}"></td>
