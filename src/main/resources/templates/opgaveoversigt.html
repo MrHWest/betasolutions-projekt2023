@@ -17,7 +17,8 @@
     </form>
 </div>
 <div class="nytask">
-            <button type="button" class="forma">Opret ny opgave</button>
+            <!--<button type="button" class="forma" th:href="@{'/create/task'(proj_id = ${param.proj_id})}">Opret ny opgave</button>-->
+    <a class="forma" th:href="@{'/create/task'(proj_id = ${param.proj_id})}">Opret ny opgave</a>
            <!-- th:action="@{/create/task}" method="post"-->
          <!--  <a class="forma" th:href="/create/tasks">Opret ny opgave</a>-->
 </div>

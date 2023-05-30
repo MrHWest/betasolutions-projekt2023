@@ -406,8 +406,8 @@ public class Controller {
         }
         return null;
     }*/
-    @GetMapping("/tasks/{proj_id}")
-    public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
+    @GetMapping("/tasks")
+    public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         return "opgaveoversigt";
@@ -437,7 +437,7 @@ public class Controller {
 
         repository.addTask(task);
 
-        return "redirect:/tasks/" + proj_id;
+        return "redirect:/tasks?proj_id=" + proj_id;
     }
 
     @GetMapping("/updateTask/{taskId}")
