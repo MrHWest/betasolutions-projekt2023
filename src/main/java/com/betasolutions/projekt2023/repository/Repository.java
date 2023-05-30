@@ -381,7 +381,7 @@ public class Repository {
         //opretter et tomt task-objekt
         Task result = new Task();
         // SQL-query for at hente en opgave fra databasen baseret på id
-        String SELECTTASK_QUERY = "SELECT name, start_date, end_date FROM beta_solutions_db.tasks WHERE id = ?";
+        String SELECTTASK_QUERY = "SELECT name, start_date, end_date, fk_project_id FROM beta_solutions_db.tasks WHERE id = ?";
         //opretter en ConnectionManager til at håndtere forbindelen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try {
@@ -400,6 +400,7 @@ public class Repository {
             result.setName(resultSet.getString(1));
             result.setStartDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(2))));
             result.setEndDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(3))));
+            result.setFk_project_id(resultSet.getInt(4));
         } catch (SQLException e) {
             //håndterer eventuelle sql-exceptions, der kan opstå
             System.out.println("Kunne ikke hente projekt-oplysninger");

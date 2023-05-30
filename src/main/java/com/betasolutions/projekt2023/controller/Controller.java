@@ -374,7 +374,7 @@ public class Controller {
         //opdater opgaven i repository
         repository.updateTask(task);
         //omdirigerer til tasks-siden
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + task.getFk_project_id();
     }
 
     @PostMapping("/delete/{taskId}")
