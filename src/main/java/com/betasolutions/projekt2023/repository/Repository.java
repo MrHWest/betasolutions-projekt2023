@@ -274,14 +274,20 @@ public class Repository {
     }
 
     public List<Task> getAllTasks(){
+        //sql query for at hente alle opgaver fra databasen
         String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks";
+        //opretter en ConnectionManager til at håndtere forbindelsen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try{
+            //opretter en forbindelse til databasen
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //opretter en PreparedStatement til at udføre sql-queryen
             PreparedStatement statement = connection.prepareStatement(getAllTask_query);
+            //udfører sql-query
             statement.execute();
             System.out.println("går igennem igen");
         } catch(SQLException e) {
+            //håndterer eventuelle sql-exceptions, der kan opstå
             System.out.println("fejl");
             e.printStackTrace();
         }
@@ -289,49 +295,61 @@ public class Repository {
     }
 
     public void addTask(Task newTask){
+        //sql-query for at tilføje en ny opgave til databasen
         String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id) VALUES(?,?,?,false,?)";
+        //opretter en ConnectionManger til at håndtere forbindelsen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try{
+            //opretter en forbindelse til databasen
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
-            //Execute QUERY
+            //opretter en PreparedStatement til at udføre sql-queryen
             PreparedStatement statement = connection.prepareStatement(ADDTASK_QUERY);
+            //konverterer LocalDate-objekter til java.sql.date-objekter
             Date sqlStartDate = Date.valueOf(newTask.getStartDate());
             Date sqlEndDate = Date.valueOf(newTask.getEndDate());
+            //sætter værdierne i PreparedStatement
             statement.setString(1, newTask.getName());
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             statement.setInt(4, newTask.getFk_project_id());
+            //udfører sql-query
             System.out.println("går igennem");
             statement.execute();
 
         } catch(SQLException e){
+            //håndterer eventuelle sql-exceptions, der kan opstå
             System.out.println("Fejl i oprettelse");
             e.printStackTrace();
         }
     }
 
     public void updateTask(Task task) {
-        // Gør QUERY klar
+        // sql-query for at opdatere en eksisterende opgave i databasen
         final String UPDATETASK_QUERY = "UPDATE beta_solutions_db.tasks SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
-        /*int id = task.getId();
-        String name = task.getName();
-        LocalDate startDate = task.getStartDate();
-        LocalDate endDate = task.getEndDate();*/
+        //opretter en ConnectionManager til at håndtere forbindelsen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try {
+            //opretter forbindelse til databasen
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+
             connection.setAutoCommit(false); //slå autocommit fra
+            //opretter en PreparedStatement til at udføre sql-queryen
             PreparedStatement statement = connection.prepareStatement(UPDATETASK_QUERY);
+            //konverter LocalDate-objekter toil java.sql.Date-objekter
             Date sqlStartDate = Date.valueOf(task.getStartDate());
             Date sqlEndDate = Date.valueOf(task.getEndDate());
+            //sætter værdierne i PreparedStatement
             statement.setString(1, task.getName());
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             statement.setInt(4, task.getId());
+            //udfør sql-query
             statement.executeUpdate();
+            //udfør en commit for at gemme ændringer i databasen
             connection.commit(); //udfør commit her
             System.out.println("hej");
         } catch (SQLException e) {
+            //håndterer eventuelle sql-exceptions, der kan opstå
             System.out.println("Opdatering fejlede");
             e.printStackTrace();
         }
@@ -339,42 +357,55 @@ public class Repository {
 
 
     public void deleteTaskById(int id){
+        // SQL-query for at slette en opgave fra databasen baseret på id
         String DELETETASK_QUERY = "DELETE FROM beta_solutions_db.tasks WHERE id = ?";
+        // Opretter en ConnectionManager til at håndtere forbindelsen til database
         ConnectionManager connectionManager = new ConnectionManager();
         try{
+            // Opretter en forbindelse til databasen
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            // Opretter en PreparedStatement til at udføre SQL-queryen
             PreparedStatement statement = connection.prepareStatement(DELETETASK_QUERY);
-
+            // Sætter værdien af id i PreparedStatement
             statement.setInt(1, id);
+            //udfører sql-quryen
             statement.executeUpdate();
             System.out.println("opgaven med id " + id + " er blevet slettet.");
         } catch (SQLException e){
+            // Håndterer eventuelle SQLExceptions, der kan opstå
             System.out.println("Kunne ikke slette task/opgave");
             e.printStackTrace();
         }
     }
     public Task getTaskById(int id) {
+        //opretter et tomt task-objekt
         Task result = new Task();
+        // SQL-query for at hente en opgave fra databasen baseret på id
         String SELECTTASK_QUERY = "SELECT name, start_date, end_date FROM beta_solutions_db.tasks WHERE id = ?";
+        //opretter en ConnectionManager til at håndtere forbindelen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try {
+            //opretter en forbindelse til databasen
             Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            //opretter en PreparedStatement til at udføre sql-queryen
             PreparedStatement statement = connection.prepareStatement(SELECTTASK_QUERY);
+            //sætter værdien af id i PreparedStatement
             statement.setInt(1, id);
 
+            //udfører sql-queryen og henter resultatet som en ResultSet
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
+            //sætter værdierne fra ResultSet i Task-objektet
             result.setId(id);
             result.setName(resultSet.getString(1));
             result.setStartDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(2))));
             result.setEndDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(resultSet.getDate(3))));
         } catch (SQLException e) {
+            //håndterer eventuelle sql-exceptions, der kan opstå
             System.out.println("Kunne ikke hente projekt-oplysninger");
             e.printStackTrace();
         }
 
         return result;
     }
-
-
 }

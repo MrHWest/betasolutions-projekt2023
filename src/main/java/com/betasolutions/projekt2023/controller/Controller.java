@@ -408,49 +408,65 @@ public class Controller {
     }*/
     @GetMapping("/tasks")
     public String getAllTasks(Model model) {
+        //henter alle opgaver fra repository
         List<Task> tasks = repository.getAllTasks();
+        //tilføjer opgaverne til modellen, så de kan vises i tasks
         model.addAttribute("tasks", tasks);
+        //returner tasks-siden
         return "opgaveoversigt";
     }
 
     @GetMapping("/create/task")
     public String createTask() {
+        //returnerer tasks-siden for at oprette en ny opgave
         return "opretnyopgave";
     }
 
     @PostMapping("/task")
     public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        //opretter en ny opgave baseret på de modtagne parametre
         Task task = new Task();
         task.setName(name);
         task.setStartDate(startDate);
         task.setEndDate(endDate);
 
+        //tilføjer opgaven til repository
         repository.addTask(task);
 
+        //henter alle opgaver fra repository og tilføjer til task-model
         List<Task> tasks = repository.getAllTasks();
         model.addAttribute("tasks", tasks);
 
+        //omdirigerer til tasks
         return "redirect:/tasks";
     }
 
     @GetMapping("/updateTask/{taskId}")
     public String updateTask(@PathVariable("taskId") int taskId, Model model) {
+        //henter opgaven med den angivne taskId fra repository
         Task task = repository.getTaskById(taskId);
+        //tilføjer opgaven til task-modellen
         model.addAttribute("task", task);
+        //returnerer updateTask-siden for at opdatere opgaven
         return "/updateTask";
     }
 
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task) {
+        //opdater opgaven i repository
         repository.updateTask(task);
+        //omdirigerer til tasks-siden
         return "redirect:/tasks";
     }
 
     @PostMapping("/delete/{taskId}")
     public String deleteTask(@PathVariable int taskId, Model model) {
+        //sletter opgaven med den angivne taskId fra repository
         repository.deleteTaskById(taskId);
+        //henter alle opgaver fra repo og tilføjer dem til task-modellen
         List<Task> tasks = repository.getAllTasks();
         model.addAttribute("tasks", tasks);
+        //omdirigerer til tasks-siden
         return "redirect:/tasks";
     }
 
