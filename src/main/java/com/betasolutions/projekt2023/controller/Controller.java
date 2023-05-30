@@ -295,7 +295,7 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    @GetMapping("/tasks")
+    /*@GetMapping("/tasks")
     public String getAllTasks(Model model, HttpSession session){
         //Hent opgaver fra session eller opret en ny liste
         List<Task> tasks = getTasksFromSession(session);
@@ -305,7 +305,7 @@ public class Controller {
 
         //returner navnet på listen
         return "opgaveoversigt";
-    }
+    }*/
 
     @GetMapping("/projektoversigt")
     public String projectOverview(Model model) {
@@ -324,7 +324,7 @@ public class Controller {
     }
 
     //her vises hvilken side vi er på
-    @GetMapping("/create/task")
+    /*@GetMapping("/create/task")
     public String createTask(){
         // her returnerer vi siden opret ny opgave
         return "opretnyopgave";
@@ -405,6 +405,54 @@ public class Controller {
             }
         }
         return null;
+    }*/
+    @GetMapping("/tasks")
+    public String getAllTasks(Model model) {
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
+        return "opgaveoversigt";
     }
+
+    @GetMapping("/create/task")
+    public String createTask() {
+        return "opretnyopgave";
+    }
+
+    @PostMapping("/task")
+    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        Task task = new Task();
+        task.setName(name);
+        task.setStartDate(startDate);
+        task.setEndDate(endDate);
+
+        repository.addTask(task);
+
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
+
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/updateTask/{taskId}")
+    public String updateTask(@PathVariable("taskId") int taskId, Model model) {
+        Task task = repository.getTaskById(taskId);
+        model.addAttribute("task", task);
+        return "/updateTask";
+    }
+
+    @PostMapping("/updateTask")
+    public String updateTask(@ModelAttribute Task task) {
+        repository.updateTask(task);
+        return "redirect:/tasks";
+    }
+
+    @PostMapping("/delete/{taskId}")
+    public String deleteTask(@PathVariable int taskId, Model model) {
+        repository.deleteTaskById(taskId);
+        List<Task> tasks = repository.getAllTasks();
+        model.addAttribute("tasks", tasks);
+        return "redirect:/tasks";
+    }
+
 
 }

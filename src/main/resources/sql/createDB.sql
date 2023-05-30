@@ -25,6 +25,7 @@ CREATE TABLE beta_solutions_db.tasks (
                                          `end_date` DATE,
 
                                          `is_pending` BOOLEAN,
+
                                          `is_done` BOOLEAN,
 
                                          `fk_project_id` INT,
@@ -34,5 +35,3 @@ CREATE TABLE beta_solutions_db.tasks (
                                          FOREIGN KEY (`fk_tasks_id`) REFERENCES tasks(id)
 
 );
-ALTER TABLE `beta_solutions_db`.`tasks`
-CHANGE COLUMN `is_pending` `is_pending` TINYINT(1) NULL ;
