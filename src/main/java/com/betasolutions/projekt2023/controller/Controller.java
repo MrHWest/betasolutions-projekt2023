@@ -381,9 +381,6 @@ public class Controller {
     public String deleteTask(@RequestParam int fk_project_id, @RequestParam int taskId, Model model) {
         //sletter opgaven med den angivne taskId fra repository
         repository.deleteTaskById(taskId);
-        //henter alle opgaver fra repo og tilføjer dem til task-modellen
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
         //omdirigerer til tasks-siden
         return "redirect:/tasks?proj_id=" + fk_project_id;
     }
