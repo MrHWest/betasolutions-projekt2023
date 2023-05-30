@@ -295,7 +295,7 @@ public class Repository {
 
     public void addTask(Task newTask){
         //sql-query for at tilføje en ny opgave til databasen
-        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id) VALUES(?,?,?,false,?)";
+        String ADDTASK_QUERY = "INSERT INTO beta_solutions_db.tasks(name, start_date, end_date, is_pending, fk_project_id, fk_tasks_id) VALUES(?,?,?,false,?,?)";
         //opretter en ConnectionManger til at håndtere forbindelsen til databasen
         ConnectionManager connectionManager = new ConnectionManager();
         try{
@@ -311,6 +311,12 @@ public class Repository {
             statement.setDate(2, sqlStartDate);
             statement.setDate(3, sqlEndDate);
             statement.setInt(4, newTask.getFk_project_id());
+            if(newTask.getFk_tasks_id() != null) {
+                statement.setInt(5, newTask.getFk_tasks_id());
+            }
+            else {
+                statement.setNull(5, java.sql.Types.NULL);
+            }
             //udfører sql-query
             System.out.println("går igennem");
             statement.execute();

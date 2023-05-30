@@ -13,6 +13,9 @@
     <!-- Skjult felt til projekt ID -->
     <input id="proj_id" name="proj_id" type="hidden" th:value="${param.proj_id}">
 
+    <!-- Skjult felt til parent ID. Kun genereret hvis parameter er tilstede -->
+    <input id="parent_id" th:if="${param.parent_id != null}" name="parent_id" type="hidden" th:value="${param.parent_id}">
+
     <!--Indtastningsfelt til oprettelse af opgavetitel -->
     <label for="title">Opgavenavn</label>
     <input type="text" id="title" name="name" required>

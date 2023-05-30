@@ -9,6 +9,8 @@ public class Task {
     private LocalDate endDate;
     private boolean isPending;
     private int fk_project_id;
+
+    private Integer fk_tasks_id;
     public Task() {
     }
 
@@ -18,6 +20,15 @@ public class Task {
         this.endDate = endDate;
         this.isPending = isPending;
         this.fk_project_id = fk_project_id;
+    }
+
+    public Task(String name, LocalDate startDate, LocalDate endDate, boolean isPending, int fk_project_id, Integer fk_tasks_id) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isPending = isPending;
+        this.fk_project_id = fk_project_id;
+        this.fk_tasks_id = fk_tasks_id;
     }
 
     public Task(int id, String name, LocalDate startDate, LocalDate endDate, boolean isPending, int fk_project_id) {
@@ -78,5 +89,9 @@ public class Task {
 
     public void setFk_project_id(int fk_project_id) {
         this.fk_project_id = fk_project_id;
+    }
+
+    public Integer getFk_tasks_id() {
+        return this.fk_tasks_id;
     }
 }
