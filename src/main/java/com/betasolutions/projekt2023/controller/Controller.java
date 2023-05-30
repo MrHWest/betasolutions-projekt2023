@@ -322,14 +322,7 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
-
-
-    @GetMapping("/tasks")
-    public String getAllTasks(Model model) {
-        //henter alle opgaver fra repository
-        List<Task> tasks = repository.getAllTasks();
-        //tilføjer opgaverne til modellen, så de kan vises i tasks
-
+    
     @GetMapping("/tasks/{proj_id}")
     public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
