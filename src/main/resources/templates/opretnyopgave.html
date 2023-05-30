@@ -10,6 +10,9 @@
 <h2>Opret opgave</h2>
 <div class="opgaveoplysninger">
   <form th:action="@{/task}" method="post">
+    <!-- Skjult felt til projekt ID -->
+    <input id="proj_id" name="proj_id" type="hidden" th:value="${param.proj_id}">
+
     <!--Indtastningsfelt til oprettelse af opgavetitel -->
     <label for="title">Opgavenavn</label>
     <input type="text" id="title" name="name" required>
