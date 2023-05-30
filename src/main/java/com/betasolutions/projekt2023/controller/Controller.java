@@ -377,15 +377,15 @@ public class Controller {
         return "redirect:/tasks?proj_id=" + task.getFk_project_id();
     }
 
-    @PostMapping("/delete/{taskId}")
-    public String deleteTask(@PathVariable int taskId, Model model) {
+    @PostMapping("/delete")
+    public String deleteTask(@RequestParam int fk_project_id, @RequestParam int taskId, Model model) {
         //sletter opgaven med den angivne taskId fra repository
         repository.deleteTaskById(taskId);
         //henter alle opgaver fra repo og tilføjer dem til task-modellen
         List<Task> tasks = repository.getAllTasks();
         model.addAttribute("tasks", tasks);
         //omdirigerer til tasks-siden
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + fk_project_id;
     }
 
 
