@@ -202,8 +202,9 @@ public class Controller {
             // All input is OK.
             Project newProject = new Project(id, name, startDate, endDate);
             repository.updateProject(newProject);
-            return "redirect:/opdater_projekt?id=" + id + "&success=true";
+            //return "redirect:/opdater_projekt?id=" + id + "&success=true";
             //return "redirect:/opdater_projekt?id=" + id;
+            return "redirect:/projektoversigt";
         }
     }
     @GetMapping("/brugeroversigt")

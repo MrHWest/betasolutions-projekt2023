@@ -251,7 +251,7 @@ public class Repository {
 
     public void updateProject(Project project) {
         // Gør QUERY klar
-        String UPDATEPROJECT_QUERY = "UPDATE beta_solutions_db.projects SET name = ?, start_date = ?, end_date = ?, is_done = ? WHERE id= ?";
+        String UPDATEPROJECT_QUERY = "UPDATE beta_solutions_db.projects SET name = ?, start_date = ?, end_date = ?  WHERE id= ?";
         ConnectionManager connectionManager = new ConnectionManager();
 
         System.out.println(project.getId() + project.getName() + project.getStartDate() + project.getSlutDate() + project.isDone());
@@ -264,7 +264,6 @@ public class Repository {
             statement.setDate(2, Date.valueOf(project.getStartDate()));
             statement.setDate(3, Date.valueOf(project.getSlutDate()));
             statement.setInt(4, project.getId());
-            statement.setBoolean(5, project.isDone());
             statement.execute();
 
         } catch (SQLException e){

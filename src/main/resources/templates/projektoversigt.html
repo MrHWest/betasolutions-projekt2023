@@ -39,7 +39,7 @@
             <td th:text="${projects.slutDate}"></td>
             <td th:text="${projects.isDone}"></td>
             <td>
-                <a th:href="@{'/updateProject/' + ${projects.id}}">
+                <a th:href="@{'/opdater_projekt'(id=${projects.id})}">
                     <button>Opdater</button>
                 </a>
                 <!--<form th:action="@{/updateTask{taskId}(taskId=${task.id})}" method="post">-->
