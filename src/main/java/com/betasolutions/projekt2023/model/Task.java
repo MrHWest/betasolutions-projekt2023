@@ -12,7 +12,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(String name, LocalDate startDate, LocalDate endDate) {
+    public Task(String name, LocalDate startDate, LocalDate endDate, boolean isPending, int fk_project_id) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isPending = isPending;
+        this.fk_project_id = fk_project_id;
     }
 
     public Task(int id, String name, LocalDate startDate, LocalDate endDate, boolean isPending, int fk_project_id) {

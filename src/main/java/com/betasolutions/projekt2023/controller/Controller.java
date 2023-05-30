@@ -322,9 +322,9 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
-    
-    @GetMapping("/tasks/{proj_id}")
-    public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
+
+    @GetMapping("/tasks")
+    public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         //returner tasks-siden
@@ -332,28 +332,31 @@ public class Controller {
     }
 
     @GetMapping("/create/task")
-    public String createTask() {
-        //returnerer tasks-siden for at oprette en ny opgave
+    public String createTask(
+            @RequestParam(name = "proj_id", required = true) int projectId
+    ) {
         return "opretnyopgave";
     }
 
     @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
-        //opretter en ny opgave baseret på de modtagne parametre
-        Task task = new Task();
-        task.setName(name);
-        task.setStartDate(startDate);
-        task.setEndDate(endDate);
+    public String createTask(@RequestParam int proj_id, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        Task task = new Task(
+                name,
+                startDate,
+                endDate,
+                false,
+                proj_id
+        );
+
+        if(name.length() > 99) {
+            // input is invalid.
+            return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
+        }
 
         //tilføjer opgaven til repository
         repository.addTask(task);
 
-        //henter alle opgaver fra repository og tilføjer til task-model
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
-
-        //omdirigerer til tasks
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + proj_id;
     }
 
     @GetMapping("/updateTask/{taskId}")
