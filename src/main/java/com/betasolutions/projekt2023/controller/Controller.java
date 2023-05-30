@@ -337,6 +337,17 @@ public class Controller {
         return "opgaveoversigt";
     }
 
+    @GetMapping("/subtasks")
+    public String getSubTasks(
+            @RequestParam(name = "parent_task_id", required = true) int parentTaskId,
+            Model model
+    ) {
+        List<Task> tasks = repository.getTasksByParentId(parentTaskId);
+        model.addAttribute("tasks", tasks);
+        //returner tasks-siden
+        return "opgaveoversigt";
+    }
+
     @GetMapping("/create/task")
     public String createTask(
             @RequestParam(name = "proj_id", required = true) int projectId

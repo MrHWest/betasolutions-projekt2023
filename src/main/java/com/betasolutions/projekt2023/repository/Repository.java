@@ -435,4 +435,30 @@ public class Repository {
         }
         return result;
     }
+
+    public List<Task> getTasksByParentId(int parentId) {
+        List<Task> result = new ArrayList<Task>();
+        String getAllTask_query = "SELECT * FROM beta_solutions_db.tasks WHERE beta_solutions_db.tasks.fk_tasks_id = ?";
+        ConnectionManager connectionManager = new ConnectionManager();
+        try{
+            Connection connection = connectionManager.getConnection(DB_URL, UID, PWD);
+            PreparedStatement statement = connection.prepareStatement(getAllTask_query);
+            statement.setInt(1, parentId);
+            ResultSet results = statement.executeQuery();
+            while(results.next()) {
+                result.add(new Task(
+                        results.getInt(1),
+                        results.getString(2),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(3))),
+                        LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(results.getDate(4))),
+                        results.getBoolean(5),
+                        parentId
+                ));
+            }
+        } catch(SQLException e) {
+            System.out.println("Error while fetching task data");
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

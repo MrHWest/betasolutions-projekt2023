@@ -38,7 +38,8 @@
         <!-- Gennemløb alle opgaver og vis dem i tabellen -->
         <tr th:each="task : ${tasks}">
             <td th:text="${task.id}"></td>
-            <td th:text="${task.name}"></td>
+            <!--<td th:text="${task.name}"></td>-->
+            <td> <a th:text="${task.name}" th:href="@{'/subtasks'(parent_task_id=${task.id})}"></a></td>
             <td th:text="${task.startDate}"></td>
             <td th:text="${task.endDate}"></td>
             <td>
