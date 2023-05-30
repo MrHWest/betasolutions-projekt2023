@@ -12,6 +12,7 @@
         <div>
             <a class="logoutbutton" href="login.html" target="_blank">Logout</a>
             <a class="logoutbutton" href="/brugeroversigt" target="_blank">Brugeroversigt</a>
+            <a class="logoutbutton" href="/projektoversigt" target="_blank">Projektoversigt</a>
             Alpha Solutions
         </div>
     </form>
@@ -23,44 +24,42 @@
            <!-- th:action="@{/create/task}" method="post"-->
          <!--  <a class="forma" th:href="/create/tasks">Opret ny opgave</a>-->
 </div>
-<div class="container">
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Opgavenavn</th>
-            <th>Startdato</th>
-            <th>Slutdato</th>
-            <th>Opdater</th>
-            <th>Slet</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Gennemløb alle opgaver og vis dem i tabellen -->
-        <tr th:each="task : ${tasks}">
-            <td th:text="${task.id}"></td>
-            <!--<td th:text="${task.name}"></td>-->
-            <td> <a th:text="${task.name}" th:href="@{'/subtasks'(parent_task_id=${task.id}, proj_id=${param.proj_id})}"></a></td>
-            <td th:text="${task.startDate}"></td>
-            <td th:text="${task.endDate}"></td>
-            <td>
-                <a th:href="@{'/updateTask/' + ${task.id}}">
-                    <button>Opdater</button>
-                </a>
-            </td>
-            <td>
-                <form action="/delete" method="post">
-                    <input type="hidden" name="_method" value="post">
-                    <input type="hidden" name="fk_project_id" th:value="${param.proj_id}">
-                    <input type="hidden" name="taskId" th:value="${task.id}">
-                    <input type="submit" value="Slet opgave">
-                </form>
-                <!-- Opret link til sletning af en specifik opgave -->
-                <!--<button type="submit" th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</button>-->
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Opgavenavn</th>
+        <th>Startdato</th>
+        <th>Slutdato</th>
+        <th>Opdater</th>
+        <th>Slet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Gennemløb alle opgaver og vis dem i tabellen -->
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <!--<td th:text="${task.name}"></td>-->
+        <td> <a th:text="${task.name}" th:href="@{'/subtasks'(parent_task_id=${task.id}, proj_id=${param.proj_id})}"></a></td>
+        <td th:text="${task.startDate}"></td>
+        <td th:text="${task.endDate}"></td>
+        <td>
+            <a th:href="@{'/updateTask/' + ${task.id}}">
+                <button>Opdater</button>
+            </a>
+        </td>
+        <td>
+            <form action="/delete" method="post">
+                <input type="hidden" name="_method" value="post">
+                <input type="hidden" name="fk_project_id" th:value="${param.proj_id}">
+                <input type="hidden" name="taskId" th:value="${task.id}">
+                <input type="submit" value="Slet opgave">
+            </form>
+            <!-- Opret link til sletning af en specifik opgave -->
+            <!--<button type="submit" th:href="@{/delete{taskId}(taskId=${task.id})}" href="/delete">Slet</button>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
