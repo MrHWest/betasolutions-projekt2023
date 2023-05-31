@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class Projekt2023ApplicationTests {
     //autowired er en annotation, der gør ting automatisk som fx at give en instans af repository-klassen i repository-variablen
-    //her bliver det muligt at bruge repository-objektet i testmetoden. 
+    //her bliver det muligt at bruge repository-objektet i testmetoden.
     @Autowired
     Repository repository = new Repository();
 
