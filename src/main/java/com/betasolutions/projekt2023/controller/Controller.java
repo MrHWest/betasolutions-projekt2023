@@ -301,18 +301,6 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    /*@GetMapping("/tasks")
-    public String getAllTasks(Model model, HttpSession session){
-        //Hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //tilføj opgaver til modellen, så de kan vises i listen
-        model.addAttribute("tasks", tasks);
-
-        //returner navnet på listen
-        return "opgaveoversigt";
-    }*/
-
     @GetMapping("/projektoversigt")
     public String projectOverview(Model model) {
         // TODO: Replace this with session data when log-in system has been implemented
@@ -330,10 +318,10 @@ public class Controller {
     }
 
 
-    @GetMapping("/tasks/{proj_id}")
+    /*@GetMapping("/tasks/{proj_id}")
     public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
     return "";
-    }
+    }*/
     @GetMapping("/tasks")
     public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
