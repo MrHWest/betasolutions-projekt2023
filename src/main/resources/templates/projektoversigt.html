@@ -18,7 +18,7 @@
     </form>
 </div>
 <div class="nytask">
-    <a class="forma" th:href="@{'/nyt_projekt'}">Opret nyt projekt</a>
+    <a class="forma" th:if="${user.admin}" th:href="@{'/nyt_projekt'}">Opret nyt projekt</a>
 </div>
 <div class="container">
     <!-- Table with extra functions for admins -->
