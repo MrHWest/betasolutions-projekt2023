@@ -77,7 +77,7 @@ public class Controller {
 
 
     @PostMapping("/login")
-    public String loginCheck(@RequestBody String requestBody){
+    public String loginCheck(@RequestBody String requestBody, HttpSession session){
 
         //Gem data local
         String username = "";
@@ -97,15 +97,20 @@ public class Controller {
             }
         }
 
-        //check om data passer med DB
 
         User user = repository.getUser(username);
-        repository.getUser(username);
+        //repository.getUser(username);
 
+        //check om data passer med DB
         //Hvis data ikke passer, send tilbage til login
         if (!password.equals(user.getPassword())){
             return "login";
-        } else { //Hvis data passer, send videre til korrekte side.
+        } else {
+
+            // Create user session
+            session.setAttribute("user", user);
+
+            //Hvis data passer, send videre til korrekte side.
             if (user.getAdmin()==true){return "opgaveoversigt";
             } else{
                 return "udviklerprojektoversigt";
@@ -197,8 +202,9 @@ public class Controller {
             // All input is OK.
             Project newProject = new Project(id, name, startDate, endDate);
             repository.updateProject(newProject);
-            return "redirect:/opdater_projekt?id=" + id + "&success=true";
+            //return "redirect:/opdater_projekt?id=" + id + "&success=true";
             //return "redirect:/opdater_projekt?id=" + id;
+            return "redirect:/projektoversigt";
         }
     }
     @GetMapping("/brugeroversigt")
@@ -323,37 +329,66 @@ public class Controller {
         return "projektoversigt";
     }
 
+
     @GetMapping("/tasks/{proj_id}")
     public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
+    return "";
+    }
+    @GetMapping("/tasks")
+    public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         //returner tasks-siden
         return "opgaveoversigt";
     }
 
+    @GetMapping("/subtasks")
+    public String getSubTasks(
+            @RequestParam(name = "proj_id", required = true) int projectId,
+            @RequestParam(name = "parent_task_id", required = true) int parentTaskId,
+            Model model
+    ) {
+        List<Task> tasks = repository.getTasksByParentId(parentTaskId);
+        model.addAttribute("tasks", tasks);
+        //returner tasks-siden
+        return "opgaveoversigt";
+    }
+
     @GetMapping("/create/task")
-    public String createTask() {
-        //returnerer tasks-siden for at oprette en ny opgave
+    public String createTask(
+            @RequestParam(name = "proj_id", required = true) int projectId,
+            @RequestParam(name = "parent_id", required = false) Integer parentId
+    ) {
         return "opretnyopgave";
     }
 
     @PostMapping("/task")
-    public String createTask(@RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
-        //opretter en ny opgave baseret på de modtagne parametre
-        Task task = new Task();
-        task.setName(name);
-        task.setStartDate(startDate);
-        task.setEndDate(endDate);
+    public String createTask(@RequestParam(name = "parent_id", required = false) Integer parent_id, @RequestParam int proj_id, @RequestParam String name, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate, Model model) {
+        // if parent_id is 0, it has not been instantiated
+        // No parent task present
+        Task task = new Task(
+                name,
+                startDate,
+                endDate,
+                false,
+                proj_id,
+                parent_id
+        );
+
+        if(name.length() > 99) {
+            // input is invalid.
+            if(parent_id != null) {
+                return "redirect:/create/task?proj_id=" + proj_id + "&parent_id=" + parent_id + "&invalidName=true";
+            }
+            else {
+                return "redirect:/create/task?proj_id=" + proj_id + "&invalidName=true";
+            }
+        }
 
         //tilføjer opgaven til repository
         repository.addTask(task);
 
-        //henter alle opgaver fra repository og tilføjer til task-model
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
-
-        //omdirigerer til tasks
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + proj_id;
     }
 
     @GetMapping("/updateTask/{taskId}")
@@ -371,19 +406,15 @@ public class Controller {
         //opdater opgaven i repository
         repository.updateTask(task);
         //omdirigerer til tasks-siden
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + task.getFk_project_id();
     }
 
-    @PostMapping("/delete/{taskId}")
-    public String deleteTask(@PathVariable int taskId, Model model) {
+    @PostMapping("/delete")
+    public String deleteTask(@RequestParam int fk_project_id, @RequestParam int taskId, Model model) {
         //sletter opgaven med den angivne taskId fra repository
         repository.deleteTaskById(taskId);
-        //henter alle opgaver fra repo og tilføjer dem til task-modellen
-        List<Task> tasks = repository.getAllTasks();
-        model.addAttribute("tasks", tasks);
         //omdirigerer til tasks-siden
-        return "redirect:/tasks";
+        return "redirect:/tasks?proj_id=" + fk_project_id;
     }
-
 
 }

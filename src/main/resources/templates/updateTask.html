@@ -13,6 +13,7 @@
   <input type="text" name="name" th:value="${task.name}">
   <input type="date" name="startDate" th:value="${task.startDate}">
   <input type="date" name="endDate" th:value="${task.endDate}">
+  <input type="hidden" name="fk_project_id" th:value="${task.fk_project_id}">
   <input type="submit" value="Opdater">
 </form>
 </body>
