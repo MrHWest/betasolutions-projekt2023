@@ -104,18 +104,13 @@ public class Controller {
         //check om data passer med DB
         //Hvis data ikke passer, send tilbage til login
         if (!password.equals(user.getPassword())){
-            return "login";
+            return "redirect:/login";
         } else {
-
             // Create user session
             session.setAttribute("user", user);
 
-            //Hvis data passer, send videre til korrekte side.
-            if (user.getAdmin()==true){return "opgaveoversigt";
-            } else{
-                return "udviklerprojektoversigt";
-            }
-
+            // Redirect to project overview
+            return "redirect:/projektoversigt";
         }
 
     }
@@ -202,8 +197,6 @@ public class Controller {
             // All input is OK.
             Project newProject = new Project(id, name, startDate, endDate);
             repository.updateProject(newProject);
-            //return "redirect:/opdater_projekt?id=" + id + "&success=true";
-            //return "redirect:/opdater_projekt?id=" + id;
             return "redirect:/projektoversigt";
         }
     }
@@ -333,7 +326,16 @@ public class Controller {
 
 
     @GetMapping("/tasks")
-    public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
+    public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, HttpSession session, Model model) {
+        User currentUser = loggedInUser(session);
+        if(currentUser == null) {
+            // User not logged in. Redirect to login-page
+            return "redirect:/login";
+        }
+        else {
+            model.addAttribute("user", currentUser);
+        }
+
         List<Task> tasks = repository.getTasksByProjectId(projectId);
         model.addAttribute("tasks", tasks);
         //returner tasks-siden
@@ -344,8 +346,18 @@ public class Controller {
     public String getSubTasks(
             @RequestParam(name = "proj_id", required = true) int projectId,
             @RequestParam(name = "parent_task_id", required = true) int parentTaskId,
+            HttpSession session,
             Model model
     ) {
+        User currentUser = loggedInUser(session);
+        if(currentUser == null) {
+            // User not logged in. Redirect to login-page
+            return "redirect:/login";
+        }
+        else {
+            model.addAttribute("user", currentUser);
+        }
+
         List<Task> tasks = repository.getTasksByParentId(parentTaskId);
         model.addAttribute("tasks", tasks);
         //returner tasks-siden
