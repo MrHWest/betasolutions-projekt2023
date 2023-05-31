@@ -314,14 +314,16 @@ public class Controller {
     }*/
 
     @GetMapping("/projektoversigt")
-    public String projectOverview(Model model) {
-        // TODO: Replace this with session data when log-in system has been implemented
-        User loggedIn = new User(0, "test", "test", true);
-
-        // Redirect to login page if user not logged in
-        if(loggedIn == null) {
+    public String projectOverview(HttpSession session, Model model) {
+        User currentUser = loggedInUser(session);
+        if(currentUser == null) {
+            // User not logged in. Redirect to login-page
             return "redirect:/login";
         }
+        else {
+            model.addAttribute("user", currentUser);
+        }
+
 
         // Show project overview
         List<Project> projects = repository.getAllProjects();
@@ -330,10 +332,6 @@ public class Controller {
     }
 
 
-    @GetMapping("/tasks/{proj_id}")
-    public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
-    return "";
-    }
     @GetMapping("/tasks")
     public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
@@ -417,4 +415,7 @@ public class Controller {
         return "redirect:/tasks?proj_id=" + fk_project_id;
     }
 
+    private User loggedInUser(HttpSession session) {
+        return (User)session.getAttribute("user");
+    }
 }

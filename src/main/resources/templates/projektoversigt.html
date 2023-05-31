@@ -21,7 +21,8 @@
     <a class="forma" th:href="@{'/nyt_projekt'}">Opret nyt projekt</a>
 </div>
 <div class="container">
-    <table>
+    <!-- Table with extra functions for admins -->
+    <table th:if="${user.admin}">
         <thead>
             <tr>
                 <th>ID</th>
@@ -54,6 +55,31 @@
                 <!-- Opret link til sletning af en specifik opgave -->
                 <button type="submit" th:href="@{/delete{projectsId}(projectsId=${projects.id})}" href="/isDone">Done</button>
             </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    <!-- Table without extra functions for admins -->
+    <table th:if="${user.admin == false}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>projektname</th>
+            <th>Startdato</th>
+            <th>Slutdato</th>
+            <th>Er færdig</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Gennemløb alle opgaver og vis dem i tabellen -->
+        <tr th:each="projects : ${projects}">
+            <td th:text="${projects.id}"></td>
+            <td><a th:text="${projects.name}" th:href="@{'/tasks'(proj_id=${projects.id})}"></a></td>
+            <td th:text="${projects.startDate}"></td>
+            <td th:text="${projects.slutDate}"></td>
+            <td th:text="${projects.isDone}"></td>
         </tr>
         </tbody>
     </table>
