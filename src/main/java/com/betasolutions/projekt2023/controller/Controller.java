@@ -322,7 +322,7 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
-    
+
     @GetMapping("/tasks/{proj_id}")
     public String getAllTasks(@PathVariable("proj_id") int projectId, Model model) {
         List<Task> tasks = repository.getTasksByProjectId(projectId);
