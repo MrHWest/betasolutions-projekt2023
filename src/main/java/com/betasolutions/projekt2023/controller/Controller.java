@@ -115,6 +115,11 @@ public class Controller {
 
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/login";
+    }
 
     /*@GetMapping("/login")
     public String login(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password){
