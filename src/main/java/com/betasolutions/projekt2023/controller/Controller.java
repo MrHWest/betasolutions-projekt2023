@@ -294,18 +294,6 @@ public class Controller {
 
     //Ahmad's HomeController
 
-    /*@GetMapping("/tasks")
-    public String getAllTasks(Model model, HttpSession session){
-        //Hent opgaver fra session eller opret en ny liste
-        List<Task> tasks = getTasksFromSession(session);
-
-        //tilføj opgaver til modellen, så de kan vises i listen
-        model.addAttribute("tasks", tasks);
-
-        //returner navnet på listen
-        return "opgaveoversigt";
-    }*/
-
     @GetMapping("/projektoversigt")
     public String projectOverview(HttpSession session, Model model) {
         User currentUser = loggedInUser(session);
@@ -323,7 +311,6 @@ public class Controller {
         model.addAttribute("projects", projects);
         return "projektoversigt";
     }
-
 
     @GetMapping("/tasks")
     public String getAllTasks(@RequestParam(name = "proj_id", required = true) int projectId, HttpSession session, Model model) {
