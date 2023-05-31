@@ -1,9 +1,11 @@
 package com.betasolutions.projekt2023;
 
+import com.betasolutions.projekt2023.model.Project;
 import com.betasolutions.projekt2023.model.Task;
 
 import com.betasolutions.projekt2023.model.User;
 import com.betasolutions.projekt2023.repository.Repository;
+import com.betasolutions.projekt2023.utility.ConnectionManager;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -14,11 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.stereotype.Controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 /*import org.junit.Before;
 import org.junit.Test;
 import java.sql.Connection;
@@ -28,8 +34,7 @@ import static org.mockito.Mockito.*;*/
 
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class Projekt2023ApplicationTests {
@@ -59,6 +64,16 @@ class Projekt2023ApplicationTests {
 
         // Assert: Tjekker om navnet på den oprettede opgave er det samme som navnet på den hentede opgave
         assertEquals(task.getName(), newtask.getName());
+    }
+
+    @Test
+    public void getTaskByIdTest() {
+        // Get project with ID 1.
+        Project p = repository.getProjectById(1);
+
+        // Assertion: A project with ID=1 has been selected
+        assertNotNull(p);
+        assertEquals(p.getId(), 1);
     }
 
     /*public class UserManagementTest {
@@ -94,5 +109,6 @@ class Projekt2023ApplicationTests {
             verify(statement).execute();
         }
     }*/
+
 
 }
